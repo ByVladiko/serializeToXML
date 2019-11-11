@@ -1,0 +1,4 @@
+package lab.first.model;
+
+public class Ticket {
+}
