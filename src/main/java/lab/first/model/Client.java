@@ -1,85 +1,95 @@
 package lab.first.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Client {
-    private long ID;
-    private String name;
-    private String surname;
-    private String secondName;
-    private ArrayList<Ticket> tickets;
+    private long id;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private List<Ticket> tickets;
 
     private static long idCounter = 0;
 
-    public Client(String name, String surname, String secondName) {
-        this.name = name;
-        this.surname = surname;
-        this.secondName = secondName;
-        this.ID = idCounter++;
-        this.tickets = new ArrayList<>();
+    public Client(String firstName, String middleName, String lastName) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.id = idCounter++;
+        this.tickets = new ArrayList<Ticket>();
     }
 
-    public Client(String name, String surname, String secondName, ArrayList<Ticket> tickets) {
-        this.name = name;
-        this.surname = surname;
-        this.secondName = secondName;
+    public Client(String firstName, String middleName, String lastName, List<Ticket> tickets) {
+        this.id = idCounter++;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
         this.tickets = tickets;
     }
 
     public Client() {
-        this.name = "Undefined";
-        this.surname = "Undefined";
-        this.secondName = "Undefined";
-        this.tickets = new ArrayList<>();
+        this.firstName = "Undefined";
+        this.middleName = "Undefined";
+        this.lastName = "Undefined";
+        this.tickets = new ArrayList<Ticket>();
     }
 
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public ArrayList<Ticket> getTickets() {
+    public List<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(ArrayList<Ticket> tickets) {
+    public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public static long getIdCounter() {
+        return idCounter;
+    }
+
+    public static void setIdCounter(long idCounter) {
+        Client.idCounter = idCounter;
     }
 
     @Override
     public String toString() {
         return "Client{" +
-                "ID=" + ID +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", secondName='" + secondName + '\'' +
+                "ID=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", tickets=" + tickets +
                 '}';
     }
@@ -87,9 +97,9 @@ public class Client {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + (name == null ? 0 : name.hashCode());
-        result = 31 * result + (surname == null ? 0 : surname.hashCode());
-        result = 31 * result + (secondName == null ? 0 : secondName.hashCode());
+        result = 31 * result + (firstName == null ? 0 : firstName.hashCode());
+        result = 31 * result + (middleName == null ? 0 : middleName.hashCode());
+        result = 31 * result + (lastName == null ? 0 : lastName.hashCode());
         for (int i = 0; i < tickets.size(); i++) {
             result = 31 * result + tickets.hashCode();
         }
@@ -110,6 +120,6 @@ public class Client {
                 return false;
             }
         }
-        return name.equals(client.getName()) && surname.equals(client.getSurname()) && secondName.equals(client.getSecondName());
+        return firstName.equals(client.getFirstName()) && middleName.equals(client.getMiddleName()) && lastName.equals(client.getLastName());
     }
 }
