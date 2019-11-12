@@ -1,4 +1,4 @@
-package com.company;
+package lab.first.model;
 
 import java.util.Objects;
 
