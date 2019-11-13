@@ -3,48 +3,48 @@ package lab.first.model;
 import java.util.Objects;
 
 public class Route {
-    private long ID;
-    private String pointOfDeparture;
-    private String pointOfArrival;
+    private long id;
+    private String startPoint; //pointOfDeparture
+    private String endPoint;   //pointOfArrival
 
     private static long idCounter = 0;
 
-    public Route(String pointOfDeparture, String pointOfArrival){
+    public Route(String startPoint, String endPoint){
         this.ID=idCounter++;
-        this.pointOfDeparture=pointOfDeparture;
-        this.pointOfArrival=pointOfArrival;
+        this.startPoint=startPoint;
+        this.endPoint=endPoint;
         }
 
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getPointOfDeparture() {
-        return pointOfDeparture;
+    public String getStartPoint() {
+        return startPoint;
     }
 
-    public void setPointOfDeparture(String pointOfDeparture) {
-        this.pointOfDeparture = pointOfDeparture;
+    public void setStartPoint(String startPoint) {
+        this.startPoint = startPoint;
     }
 
-    public String getPointOfArrival() {
-        return pointOfArrival;
+    public String getEndPoint() {
+        return endPoint;
     }
 
-    public void setPointOfArrival(String pointOfArrival) {
-        this.pointOfArrival = pointOfArrival;
+    public void setEndPoint(String endPoint) {
+        this.endPoint = endPoint;
     }
 
     @Override
     public String toString() {
         return "Route{" +
-                "ID=" + ID +
-                ", pointOfDeparture='" + pointOfDeparture + '\'' +
-                ", pointOfArrival='" + pointOfArrival + '\'' +
+                "id=" + id +
+                ", startPoint='" + startPoint + '\'' +
+                ", endPoint='" + endPoint + '\'' +
                 '}';
     }
 
@@ -53,14 +53,14 @@ public class Route {
         if (this == o) return true;
         if (!(o instanceof Route)) return false;
         Route route = (Route) o;
-        return ID == route.ID &&
-                Objects.equals(pointOfDeparture, route.pointOfDeparture) &&
-                Objects.equals(pointOfArrival, route.pointOfArrival);
+        return id == route.id &&
+                Objects.equals(startPoint, route.startPoint) &&
+                Objects.equals(endPoint, route.endPoint);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, pointOfDeparture, pointOfArrival);
+        return Objects.hash(id, startPoint, endPoint);
     }
 }
 
