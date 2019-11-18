@@ -1,25 +1,25 @@
 package lab.first.model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Airship {
-    private long ID;
+    private UUID id;
     private String model;
     private long numberOfSeat;
-    private static long idCount = 0;
 
     public Airship(String model, long numberOfSeat) {
         this.model = model;
         this.numberOfSeat = numberOfSeat;
-        this.ID = idCount++;
+        this.id = UUID.randomUUID();
     }
 
-    public long getID() {
-        return ID;
+    public UUID getID() {
+        return id;
     }
 
     public void setID(long ID) {
-        this.ID = ID;
+        this.id = id;
     }
 
     public String getModel() {
@@ -41,7 +41,7 @@ public class Airship {
     @Override
     public String toString() {
         return "Airship{" +
-                "ID=" + ID +
+                "id=" + id.toString() +
                 ", model='" + model + '\'' +
                 ", numberOfSeat=" + numberOfSeat +
                 '}';
@@ -52,13 +52,13 @@ public class Airship {
         if (this == o) return true;
         if (!(o instanceof Airship)) return false;
         Airship airship = (Airship) o;
-        return ID == airship.ID &&
+        return id == airship.id &&
                 numberOfSeat == airship.numberOfSeat &&
                 Objects.equals(model, airship.model);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, model, numberOfSeat);
+        return Objects.hash(id.toString(), model, numberOfSeat);
     }
 }
