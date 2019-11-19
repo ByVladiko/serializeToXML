@@ -6,11 +6,11 @@ import java.util.UUID;
 public class Airship {
     private UUID id;
     private String model;
-    private long numberOfSeat;
+    private long seatNumber;
 
-    public Airship(String model, long numberOfSeat) {
+    public Airship(String model, long seatNumber) {
         this.model = model;
-        this.numberOfSeat = numberOfSeat;
+        this.seatNumber = seatNumber;
         this.id = UUID.randomUUID();
     }
 
@@ -18,7 +18,7 @@ public class Airship {
         return id;
     }
 
-    public void setID(long ID) {
+    public void setID(long id) {
         this.id = id;
     }
 
@@ -30,12 +30,12 @@ public class Airship {
         this.model = model;
     }
 
-    public long getNumberOfSeat() {
-        return numberOfSeat;
+    public long getSeatNumber() {
+        return seatNumber;
     }
 
-    public void setNumberOfSeat(long numberOfSeat) {
-        this.numberOfSeat = numberOfSeat;
+    public void setSeatNumber(long seatNumber) {
+        this.seatNumber = seatNumber;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Airship {
         return "Airship{" +
                 "id=" + id.toString() +
                 ", model='" + model + '\'' +
-                ", numberOfSeat=" + numberOfSeat +
+                ", seatNumber=" + seatNumber +
                 '}';
     }
 
@@ -53,12 +53,12 @@ public class Airship {
         if (!(o instanceof Airship)) return false;
         Airship airship = (Airship) o;
         return id == airship.id &&
-                numberOfSeat == airship.numberOfSeat &&
+                seatNumber == airship.seatNumber &&
                 Objects.equals(model, airship.model);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id.toString(), model, numberOfSeat);
+        return Objects.hash(id.toString(), model, seatNumber);
     }
 }
