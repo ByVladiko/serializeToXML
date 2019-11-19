@@ -10,7 +10,7 @@ public class Route {
     private static long idCounter = 0;
 
     public Route(String startPoint, String endPoint){
-        this.ID=idCounter++;
+        this.id=idCounter++;
         this.startPoint=startPoint;
         this.endPoint=endPoint;
         }

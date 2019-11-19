@@ -2,25 +2,24 @@ package lab.first.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Ticket {
-    private long id;
+    private String id;
     private Airship airship;
     private List<Route> routeList;
 
-    private static int idCounter = 0;
-
     public Ticket(Airship airship, List<Route> routeList) {
-        this.id = idCounter++;
+        this.id = UUID.randomUUID().toString();
         this.airship = airship;
         this.routeList = routeList;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -38,14 +37,6 @@ public class Ticket {
 
     public void setTickets(List<Route> routeList) {
         this.routeList = routeList;
-    }
-
-    public static int getIdCounter() {
-        return idCounter;
-    }
-
-    public static void setIdCounter(int idCounter) {
-        Ticket.idCounter = idCounter;
     }
 
     @Override

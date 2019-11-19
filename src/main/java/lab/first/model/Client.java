@@ -2,26 +2,24 @@ package lab.first.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Client {
-    private long id;
+    private String id;
     private String firstName;
     private String middleName;
     private String lastName;
     private List<Ticket> tickets;
 
-    private static long idCounter = 0;
-
     public Client(String firstName, String middleName, String lastName) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.id = idCounter++;
+        this.id = UUID.randomUUID().toString();
         this.tickets = new ArrayList<Ticket>();
     }
 
     public Client(String firstName, String middleName, String lastName, List<Ticket> tickets) {
-        this.id = idCounter++;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -35,11 +33,11 @@ public class Client {
         this.tickets = new ArrayList<Ticket>();
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -73,14 +71,6 @@ public class Client {
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
-    }
-
-    public static long getIdCounter() {
-        return idCounter;
-    }
-
-    public static void setIdCounter(long idCounter) {
-        Client.idCounter = idCounter;
     }
 
     @Override
