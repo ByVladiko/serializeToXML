@@ -3,23 +3,22 @@ package lab.first.model;
 import java.util.Objects;
 
 public class Route {
-    private long id;
+    private UUID id;
     private String startPoint; //pointOfDeparture
     private String endPoint;   //pointOfArrival
 
-    private static long idCounter = 0;
 
     public Route(String startPoint, String endPoint){
-        this.ID=idCounter++;
+        this.id = UUID.randomUUID();
         this.startPoint=startPoint;
         this.endPoint=endPoint;
-        }
+    }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -39,8 +38,8 @@ public class Route {
         this.endPoint = endPoint;
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Route{" +
                 "id=" + id +
                 ", startPoint='" + startPoint + '\'' +
@@ -48,19 +47,17 @@ public class Route {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Route)) return false;
-        Route route = (Route) o;
-        return id == route.id &&
-                Objects.equals(startPoint, route.startPoint) &&
-                Objects.equals(endPoint, route.endPoint);
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Route)) return false;
+        if (!super.equals(object)) return false;
+        Route route = (Route) object;
+        return java.util.Objects.equals(id, route.id) &&
+                java.util.Objects.equals(startPoint, route.startPoint) &&
+                java.util.Objects.equals(endPoint, route.endPoint);
     }
 
-    @Override
     public int hashCode() {
-        return Objects.hash(id, startPoint, endPoint);
+        return Objects.hash(super.hashCode(), id, startPoint, endPoint);
     }
 }
-
