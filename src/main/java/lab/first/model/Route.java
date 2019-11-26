@@ -1,7 +1,12 @@
 package lab.first.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.UUID;
 
+@XmlRootElement(name = "Route")
 public class Route {
     private UUID id;
     private String startPoint; //pointOfDeparture
@@ -14,6 +19,7 @@ public class Route {
         this.endPoint=endPoint;
     }
 
+    @XmlAttribute
     public UUID getId() {
         return id;
     }
@@ -22,6 +28,7 @@ public class Route {
         this.id = id;
     }
 
+    @XmlElement
     public String getStartPoint() {
         return startPoint;
     }
@@ -29,7 +36,8 @@ public class Route {
     public void setStartPoint(String startPoint) {
         this.startPoint = startPoint;
     }
-
+    
+    @XmlElement
     public String getEndPoint() {
         return endPoint;
     }
