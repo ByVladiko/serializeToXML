@@ -8,6 +8,35 @@
     <artifactId>nc_lab1</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/java/resources</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/javax.xml/jaxb-api -->
         <dependency>
@@ -28,12 +57,5 @@
             <version>11</version>
             <type>pom</type>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>4.0</version>
-        </dependency>
-
     </dependencies>
 </project>

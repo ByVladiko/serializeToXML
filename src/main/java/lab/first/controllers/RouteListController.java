@@ -3,6 +3,7 @@ package lab.first.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -89,13 +90,13 @@ public class RouteListController implements Initializable {
 
     @FXML
     void deleteRouteButtonAction(ActionEvent event) {
-        int id = (int) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе удаляемый маршрут
+        UUID id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе удаляемый маршрут
 
     }
 
     @FXML
     void editRouteButtonAction(ActionEvent event) throws IOException {
-        int id = (int) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
+        UUID id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_route.fxml"));
         Parent root = loader.load();
@@ -103,7 +104,6 @@ public class RouteListController implements Initializable {
         stage.setScene(scene);
     }
 
-    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableRoutes.add(new Route("L.A.", "Moscow"));
         tableRoutes.add(new Route("Kostroma", "Saratov"));
