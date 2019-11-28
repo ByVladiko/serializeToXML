@@ -11,7 +11,7 @@ public class MainApp extends Application {
     public Stage MainStage;
 
     public static void main(String[] args) {
-
+        System.out.println();
         launch(args);
     }
 

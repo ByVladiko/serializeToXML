@@ -1,28 +1,34 @@
 package lab.first.model;
 
+import javax.xml.bind.annotation.*;
 import java.util.Objects;
+import java.util.UUID;
 
+@XmlRootElement(name = "Route")
 public class Route {
-    private long id;
+    private UUID id;
     private String startPoint; //pointOfDeparture
     private String endPoint;   //pointOfArrival
 
-    private static long idCounter = 0;
 
     public Route(String startPoint, String endPoint){
-        this.id=idCounter++;
+        this.id = UUID.randomUUID();
         this.startPoint=startPoint;
         this.endPoint=endPoint;
         }
 
-    public long getId() {
+    public Route() {
+    }
+
+    @XmlAttribute
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
-
+    @XmlElement
     public String getStartPoint() {
         return startPoint;
     }
@@ -30,7 +36,7 @@ public class Route {
     public void setStartPoint(String startPoint) {
         this.startPoint = startPoint;
     }
-
+    @XmlElement
     public String getEndPoint() {
         return endPoint;
     }
