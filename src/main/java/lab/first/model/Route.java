@@ -1,6 +1,7 @@
 package lab.first.model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Route {
     private UUID id;
