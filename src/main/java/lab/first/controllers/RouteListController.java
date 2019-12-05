@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,16 +26,12 @@ import lab.first.model.Route;
 public class RouteListController implements Initializable {
 
     private ObservableList<Route> tableRoutes = FXCollections.observableArrayList();
-    public static Stage stage;
 
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
-
-    @FXML
-    private Button backButton;
 
     @FXML
     private TextField fromTextField;
@@ -76,32 +73,72 @@ public class RouteListController implements Initializable {
     private Button mainInfoButton;
 
     @FXML
-    void backButtonAction(ActionEvent event) {
-
+    public void addRouteButtonAction(ActionEvent event) throws Exception {
+        windows("new_route.fxml", "New Route", event);
+//        ((Node)(event.getSource())).getScene().getWindow().hide();
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("new_route.fxml"));
+//        Parent root = loader.load();
+//        Scene scene = new Scene(root);
+//        Stage stage = new Stage();
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     @FXML
-    void addRouteButtonAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("new_route.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-    }
-
-    @FXML
-    void deleteRouteButtonAction(ActionEvent event) {
+    public void deleteRouteButtonAction(ActionEvent event) {
         UUID id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе удаляемый маршрут
 
     }
 
     @FXML
-    void editRouteButtonAction(ActionEvent event) throws IOException {
-        UUID id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
-
+    void editRouteButtonAction(ActionEvent event) throws Exception {
+//        UUID id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_route.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        EditRouteController editController = loader.getController(); //получаем контроллер для второй формы
+        Route route = new Route("Mexico", "Brazil");
+        editController.writeInFields(route);
+        editController.setEditRoute(route);
+        stage.setTitle("Edit Route");
         stage.setScene(scene);
+        stage.show();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+
+    @FXML
+    void mainRoutesButtonAction(ActionEvent event) {
+        refreshTable();
+    }
+
+    private void windows(String path, String title, ActionEvent event) throws Exception {
+
+        double width = ((Node) event.getSource()).getScene().getWidth();
+        double height = ((Node) event.getSource()).getScene().getHeight();
+
+        Parent root = FXMLLoader.load(getClass().getResource(path));
+        Scene scene = new Scene(root, width, height);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void mainTicketsButtonAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void mainInfoButtonAction(ActionEvent event) {
+
+    }
+
+    private void refreshTable() {
+        tableRoutes.removeAll();
+       //tableRoutes.add();
+        tableViewRoutes.setItems(tableRoutes);
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {

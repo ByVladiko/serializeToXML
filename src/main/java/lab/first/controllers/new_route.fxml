@@ -24,11 +24,6 @@
                   <Image url="@../../../../resources/assets/logo.png" />
                </image>
             </ImageView>
-            <Button fx:id="backButton" contentDisplay="CENTER" layoutX="1056.0" layoutY="12.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="44.0" prefWidth="130.0" style="-fx-background-color: #0271BB;" text="Back" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
          </children>
       </Pane>
    </top>
@@ -66,7 +61,7 @@
    <left>
       <Pane prefHeight="533.0" prefWidth="277.0" style="-fx-background-color: #0271BB; -fx-background-radius: 0 30 0 0;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="routesMainButton" alignment="BASELINE_LEFT" contentDisplay="TOP" layoutY="121.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="277.0" style="-fx-background-color: #0271BB; -fx-border-color: #FFFFFF;" text="Routes" textFill="WHITE">
+            <Button fx:id="routesMainButton" alignment="BASELINE_LEFT" contentDisplay="TOP" layoutY="121.0" mnemonicParsing="false" onAction="#routesMainButtonAction" prefHeight="88.0" prefWidth="277.0" style="-fx-background-color: #0271BB; -fx-border-color: #FFFFFF;" text="Routes" textFill="WHITE">
                <font>
                   <Font name="Symbol" size="27.0" />
                </font>
@@ -75,12 +70,12 @@
                </opaqueInsets>
             </Button>
             <Pane prefHeight="121.0" prefWidth="277.0" />
-            <Button fx:id="ticketsMainButton" alignment="BASELINE_LEFT" contentDisplay="TOP" layoutY="209.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="277.0" style="-fx-background-color: #0271BB; -fx-border-color: #FFFFFF;" text="Tickets" textFill="WHITE">
+            <Button fx:id="ticketsMainButton" alignment="BASELINE_LEFT" contentDisplay="TOP" layoutY="209.0" mnemonicParsing="false" onAction="#ticketsMainButtonAction" prefHeight="88.0" prefWidth="277.0" style="-fx-background-color: #0271BB; -fx-border-color: #FFFFFF;" text="Tickets" textFill="WHITE">
                <font>
                   <Font name="Symbol" size="27.0" />
                </font>
             </Button>
-            <Button fx:id="infoMainButton" alignment="BASELINE_LEFT" contentDisplay="TOP" layoutY="297.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="277.0" style="-fx-background-color: #0271BB; -fx-border-color: #FFFFFF;" text="Information" textFill="WHITE">
+            <Button fx:id="infoMainButton" alignment="BASELINE_LEFT" contentDisplay="TOP" layoutY="297.0" mnemonicParsing="false" onAction="#infoMainButtonAction" prefHeight="88.0" prefWidth="277.0" style="-fx-background-color: #0271BB; -fx-border-color: #FFFFFF;" text="Information" textFill="WHITE">
                <font>
                   <Font name="Symbol" size="27.0" />
                </font>
