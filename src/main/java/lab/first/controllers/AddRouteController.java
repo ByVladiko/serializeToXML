@@ -51,7 +51,7 @@ public class AddRouteController implements Initializable {
     }
 
     public void routesMainButtonAction(ActionEvent event) throws Exception{
-        windows("../model/list_routes.fxml", "List Routes", event);
+        toScene("../../../list_routes.fxml", "List Routes", event);
     }
 
     @FXML
@@ -64,7 +64,7 @@ public class AddRouteController implements Initializable {
 
     }
 
-    private void windows(String path, String title, ActionEvent event) throws Exception {
+    private void toScene(String path, String title, ActionEvent event) throws Exception {
 
         double width = ((Node) event.getSource()).getScene().getWidth();
         double height = ((Node) event.getSource()).getScene().getHeight();

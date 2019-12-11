@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,13 +20,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 import lab.first.model.Route;
 
 public class RouteListController implements Initializable {
 
-    private ObservableList<Route> tableRoutes = FXCollections.observableArrayList();
+    private ObservableList<Route> tableRoutes;
 
     @FXML
     private ResourceBundle resources;
@@ -74,7 +75,7 @@ public class RouteListController implements Initializable {
 
     @FXML
     public void addRouteButtonAction(ActionEvent event) throws Exception {
-        windows("new_route.fxml", "New Route", event);
+        toScene("../../../new_route.fxml", "New Route", event);
 //        ((Node)(event.getSource())).getScene().getWindow().hide();
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("new_route.fxml"));
 //        Parent root = loader.load();
@@ -93,7 +94,7 @@ public class RouteListController implements Initializable {
     @FXML
     void editRouteButtonAction(ActionEvent event) throws Exception {
 //        UUID id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_route.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../../edit_route.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -104,7 +105,6 @@ public class RouteListController implements Initializable {
         stage.setTitle("Edit Route");
         stage.setScene(scene);
         stage.show();
-        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     @FXML
@@ -112,7 +112,7 @@ public class RouteListController implements Initializable {
         refreshTable();
     }
 
-    private void windows(String path, String title, ActionEvent event) throws Exception {
+    private void toScene(String path, String title, ActionEvent event) throws Exception {
 
         double width = ((Node) event.getSource()).getScene().getWidth();
         double height = ((Node) event.getSource()).getScene().getHeight();
@@ -135,9 +135,15 @@ public class RouteListController implements Initializable {
 
     }
 
+    @FXML
+    void idInputTextFieldAction(InputMethodEvent event) {
+//        if(!idTextField.getText().isEmpty()) {
+//           tableRoutes.stream().filter(route->((route.getId().toString().indexOf(idTextField.getText()) > 0)? true : false));
+//        }
+//        else tableViewRoutes.setItems(tableRoutes);
+    }
+
     private void refreshTable() {
-        tableRoutes.removeAll();
-       //tableRoutes.add();
         tableViewRoutes.setItems(tableRoutes);
     }
 

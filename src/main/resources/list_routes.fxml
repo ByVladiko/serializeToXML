@@ -69,7 +69,7 @@
                         <Font size="20.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="idTextField" layoutX="14.0" layoutY="39.0" opacity="0.61" prefHeight="45.0" prefWidth="290.0" promptText="ID">
+                  <TextField fx:id="idTextField" layoutX="14.0" layoutY="39.0" onInputMethodTextChanged="#idInputTextFieldAction" opacity="0.61" prefHeight="45.0" prefWidth="290.0" promptText="ID">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -78,7 +78,7 @@
             </Pane>
          </top>
          <center>
-            <TableView fx:id="tableViewRoutes" prefHeight="319.0" prefWidth="588.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="tableViewRoutes" prefHeight="319.0" prefWidth="905.0" BorderPane.alignment="CENTER">
               <columns>
                   <TableColumn fx:id="tableRoutesColumnId" prefWidth="293.0" text="ID" />
                 <TableColumn fx:id="tableRoutesColumnFrom" prefWidth="306.0" text="From" />
@@ -108,7 +108,7 @@
             </Pane>
          </bottom>
          <left>
-            <Pane prefHeight="319.0" prefWidth="17.0" BorderPane.alignment="CENTER" />
+            <Pane prefHeight="319.0" prefWidth="15.0" BorderPane.alignment="CENTER" />
          </left>
          <right>
             <Pane prefHeight="319.0" prefWidth="14.0" BorderPane.alignment="CENTER" />
