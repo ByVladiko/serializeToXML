@@ -26,7 +26,7 @@ import lab.first.model.Route;
 
 public class RouteListController implements Initializable {
 
-    private ObservableList<Route> tableRoutes;
+    private ObservableList<Route> tableRoutes  = FXCollections.observableArrayList();
 
     @FXML
     private ResourceBundle resources;
