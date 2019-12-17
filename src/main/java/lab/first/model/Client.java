@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Client {
-    private String id;
+    private UUID id;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -15,11 +15,19 @@ public class Client {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
         this.tickets = new ArrayList<Ticket>();
     }
 
     public Client(String firstName, String middleName, String lastName, List<Ticket> tickets) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.tickets = tickets;
+    }
+
+    public Client(UUID id, String firstName, String middleName, String lastName, List<Ticket> tickets) {
+        this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -33,11 +41,11 @@ public class Client {
         this.tickets = new ArrayList<Ticket>();
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

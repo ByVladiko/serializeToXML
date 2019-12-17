@@ -5,21 +5,27 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Ticket {
-    private String id;
+    private UUID id;
     private Airship airship;
     private List<Route> routeList;
 
     public Ticket(Airship airship, List<Route> routeList) {
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
         this.airship = airship;
         this.routeList = routeList;
     }
 
-    public String getId() {
+    public Ticket(UUID id, Airship airship, List<Route> routeList) {
+        this.id = id;
+        this.airship = airship;
+        this.routeList = routeList;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

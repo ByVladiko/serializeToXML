@@ -20,6 +20,12 @@ public class Route {
     public Route() {
     }
 
+    public Route(UUID id, String startPoint, String endPoint) {
+        this.id = id;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+    }
+
     @XmlAttribute
     public UUID getId() {
         return id;
