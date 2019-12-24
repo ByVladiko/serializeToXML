@@ -55,7 +55,15 @@ public class EditRouteController implements Initializable {
 
     @FXML
     void saveRouteButtonAction(ActionEvent event) throws  Exception {
-
+        editRoute.setStartPoint(fromTextField.getText());
+        editRoute.setEndPoint(toTextField.getText());
+        for (int i = 0; i < RouteListController.tableRoutes.size(); i++) {
+            if (RouteListController.tableRoutes.get(i).getId() == editRoute.getId()) {
+                RouteListController.tableRoutes.set(i, editRoute);
+            }
+            break;
+        }
+        toScene("../../../list_routes.fxml", "List Routes", event);
     }
 
     @FXML

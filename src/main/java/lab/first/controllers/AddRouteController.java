@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lab.first.model.Route;
 
 public class AddRouteController implements Initializable {
 
@@ -41,8 +42,9 @@ public class AddRouteController implements Initializable {
     private Button infoMainButton;
 
     @FXML
-    void saveRouteButtonAction(ActionEvent event) {
-
+    void saveRouteButtonAction(ActionEvent event) throws Exception {
+        RouteListController.tableRoutes.add(new Route(fromTextField.getText(), toTextField.getText()));
+        toScene("../../../list_routes.fxml", "List Routes", event);
     }
 
     @Override
