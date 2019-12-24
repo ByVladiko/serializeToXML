@@ -24,7 +24,15 @@ import lab.first.model.Route;
 
 public class RouteListController implements Initializable {
 
-    private ObservableList<Route> tableRoutes  = FXCollections.observableArrayList();
+    public static ObservableList<Route> tableRoutes  = FXCollections.observableArrayList();
+
+    public ObservableList<Route> getTableRoutes() {
+        return tableRoutes;
+    }
+
+    public void setTableRoutes(ObservableList<Route> tableRoutes) {
+        this.tableRoutes = tableRoutes;
+    }
 
     @FXML
     private ResourceBundle resources;
@@ -85,29 +93,50 @@ public class RouteListController implements Initializable {
 
     @FXML
     public void deleteRouteButtonAction(ActionEvent event) {
-        UUID id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе удаляемый маршрут
-
+        UUID id = null;
+        if (tableViewRoutes.getSelectionModel().getSelectedItem() != null) {
+            id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
+        } else {
+            return;
+        }
+            for (int i = 0; i < tableRoutes.size(); i++) {
+                if (tableRoutes.get(i).getId() == id) {
+                    tableRoutes.remove(i);
+                }
+            }
+            updateTable();
     }
 
     @FXML
     void editRouteButtonAction(ActionEvent event) throws Exception {
-//        UUID id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../../edit_route.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        EditRouteController editController = loader.getController(); //получаем контроллер для второй формы
-        Route route = new Route("Mexico", "Brazil");
-        editController.writeInFields(route);
-        editController.setEditRoute(route);
-        stage.setTitle("Edit Route");
-        stage.setScene(scene);
-        stage.show();
+        UUID id = null;
+        if(tableViewRoutes.getSelectionModel().getSelectedItem() != null) {
+            id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
+        } else {
+            return;
+        }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../../edit_route.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            EditRouteController editController = loader.getController(); //получаем контроллер для второй формы
+            Route route = null;
+            for (int i = 0; i < tableRoutes.size(); i++) {
+                if (tableRoutes.get(i).getId() == id) {
+                    route = tableRoutes.get(i);
+                    break;
+                }
+            }
+            editController.writeInFields(route);
+            editController.setEditRoute(route);
+            stage.setTitle("Edit Route");
+            stage.setScene(scene);
+            stage.show();
     }
 
     @FXML
     void mainRoutesButtonAction(ActionEvent event) {
-        refreshTable();
+        updateTable();
     }
 
     private void toScene(String path, String title, ActionEvent event) throws Exception {
@@ -141,14 +170,12 @@ public class RouteListController implements Initializable {
 //        else tableViewRoutes.setItems(tableRoutes);
     }
 
-    private void refreshTable() {
+    private void updateTable() {
+
         tableViewRoutes.setItems(tableRoutes);
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tableRoutes.add(new Route("L.A.", "Moscow"));
-        tableRoutes.add(new Route("Kostroma", "Saratov"));
-        tableRoutes.add(new Route("Tolyatti", "Chelyabinsk"));
 
         tableRoutesColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableRoutesColumnFrom.setCellValueFactory(new PropertyValueFactory<>("startPoint"));
