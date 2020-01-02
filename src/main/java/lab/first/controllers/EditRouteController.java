@@ -47,12 +47,6 @@ public class EditRouteController implements Initializable {
     @FXML
     private Button infoMainButton;
 
-
-    @FXML
-    void backButtonAction(ActionEvent event) {
-
-    }
-
     @FXML
     void saveRouteButtonAction(ActionEvent event) throws  Exception {
         editRoute.setStartPoint(fromTextField.getText());
@@ -67,17 +61,17 @@ public class EditRouteController implements Initializable {
     }
 
     @FXML
-    void routesMainButtonAction(ActionEvent event) throws Exception {
+    void mainRoutesButtonAction(ActionEvent event) throws Exception {
         toScene("../../../list_routes.fxml", "List Routes", event);
     }
 
     @FXML
-    void ticketsMainButtonAction(ActionEvent event) {
+    void mainTicketsButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void infoMainButtonAction(ActionEvent event) {
+    void mainInfoButtonAction(ActionEvent event) {
 
     }
 

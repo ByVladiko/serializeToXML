@@ -52,17 +52,17 @@ public class AddRouteController implements Initializable {
 
     }
 
-    public void routesMainButtonAction(ActionEvent event) throws Exception{
+    public void mainRoutesButtonAction(ActionEvent event) throws Exception{
         toScene("../../../list_routes.fxml", "List Routes", event);
     }
 
     @FXML
-    public void ticketsMainButtonAction(ActionEvent event) {
+    public void mainTicketsButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    public void infoMainButtonAction(ActionEvent event) {
+    public void mainInfoButtonAction(ActionEvent event) {
 
     }
 
