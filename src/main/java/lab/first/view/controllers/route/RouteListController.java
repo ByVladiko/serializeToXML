@@ -1,4 +1,4 @@
-package lab.first.controllers;
+package lab.first.view.controllers.route;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -77,11 +77,11 @@ public class RouteListController implements Initializable {
     private Button mainTicketsButton;
 
     @FXML
-    private Button mainInfoButton;
+    private Button mainClientsButton;
 
     @FXML
     public void addRouteButtonAction(ActionEvent event) throws Exception {
-        toScene("../../../new_route.fxml", "New Route", event);
+        toScene("route/new_route.fxml", "New Route", event);
 //        ((Node)(event.getSource())).getScene().getWindow().hide();
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("new_route.fxml"));
 //        Parent root = loader.load();
@@ -104,7 +104,7 @@ public class RouteListController implements Initializable {
                     tableRoutes.remove(i);
                 }
             }
-            updateTable();
+            refreshTable();
     }
 
     @FXML
@@ -115,7 +115,7 @@ public class RouteListController implements Initializable {
         } else {
             return;
         }
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../../edit_route.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../../../../fxml/route/edit_route.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -135,34 +135,6 @@ public class RouteListController implements Initializable {
     }
 
     @FXML
-    void mainRoutesButtonAction(ActionEvent event) {
-        updateTable();
-    }
-
-    private void toScene(String path, String title, ActionEvent event) throws Exception {
-
-        double width = ((Node) event.getSource()).getScene().getWidth();
-        double height = ((Node) event.getSource()).getScene().getHeight();
-
-        Parent root = FXMLLoader.load(getClass().getResource(path));
-        Scene scene = new Scene(root, width, height);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    void mainTicketsButtonAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void mainInfoButtonAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void idInputTextFieldAction(InputMethodEvent event) {
 //        if(!idTextField.getText().isEmpty()) {
 //           tableRoutes.stream().filter(route->((route.getId().toString().indexOf(idTextField.getText()) > 0)? true : false));
@@ -170,9 +142,36 @@ public class RouteListController implements Initializable {
 //        else tableViewRoutes.setItems(tableRoutes);
     }
 
-    private void updateTable() {
-
+    private void refreshTable() {
         tableViewRoutes.setItems(tableRoutes);
+    }
+
+    @FXML
+    private void mainRoutesButtonAction(ActionEvent event) throws Exception {
+        toScene("route/list_routes.fxml", "List Routes", event);
+    }
+
+    @FXML
+    private void mainClientsButtonAction(ActionEvent event) throws Exception {
+        toScene("client/list_clients.fxml", "List Clients", event);
+    }
+
+    @FXML
+    private void mainTicketsButtonAction(ActionEvent event) throws Exception {
+        toScene("ticket/list_tickets.fxml", "List Tickets", event);
+    }
+
+    private void toScene(String path, String title, ActionEvent event) throws Exception {
+
+        double width = ((Node) event.getSource()).getScene().getWidth();
+        double height = ((Node) event.getSource()).getScene().getHeight();
+
+        Parent root = FXMLLoader.load(getClass().getResource("../../../../../fxml/" + path));
+        Scene scene = new Scene(root, width, height);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -181,7 +180,7 @@ public class RouteListController implements Initializable {
         tableRoutesColumnFrom.setCellValueFactory(new PropertyValueFactory<>("startPoint"));
         tableRoutesColumnTo.setCellValueFactory(new PropertyValueFactory<>("endPoint"));
 
-        tableViewRoutes.setItems(tableRoutes);
+        refreshTable();
     }
 }
 

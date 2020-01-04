@@ -1,8 +1,8 @@
-package lab.first.controllers.FXModels;
+package lab.first.view.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lab.first.controllers.ConverterToFX;
+import lab.first.view.ConverterToFX;
 import lab.first.model.Route;
 import lab.first.model.Ticket;
 

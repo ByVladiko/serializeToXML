@@ -1,9 +1,9 @@
-package lab.first.controllers;
+package lab.first.view;
 
-import lab.first.controllers.FXModels.AirshipFX;
-import lab.first.controllers.FXModels.ClientFX;
-import lab.first.controllers.FXModels.RouteFX;
-import lab.first.controllers.FXModels.TicketFX;
+import lab.first.view.model.AirshipFX;
+import lab.first.view.model.ClientFX;
+import lab.first.view.model.RouteFX;
+import lab.first.view.model.TicketFX;
 import lab.first.model.Airship;
 import lab.first.model.Client;
 import lab.first.model.Route;

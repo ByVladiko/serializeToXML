@@ -1,4 +1,4 @@
-package lab.first.controllers;
+package lab.first.view.controllers.route;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,7 +45,7 @@ public class EditRouteController implements Initializable {
     private Button ticketsMainButton;
 
     @FXML
-    private Button infoMainButton;
+    private Button clientsMainButton;
 
     @FXML
     void saveRouteButtonAction(ActionEvent event) throws  Exception {
@@ -57,22 +57,35 @@ public class EditRouteController implements Initializable {
             }
             break;
         }
-        toScene("../../../list_routes.fxml", "List Routes", event);
+        toScene("route/list_routes.fxml", "List Routes", event);
     }
 
     @FXML
-    void mainRoutesButtonAction(ActionEvent event) throws Exception {
-        toScene("../../../list_routes.fxml", "List Routes", event);
+    private void mainRoutesButtonAction(ActionEvent event) throws Exception {
+        toScene("route/list_routes.fxml", "List Routes", event);
     }
 
     @FXML
-    void mainTicketsButtonAction(ActionEvent event) {
-
+    private void mainClientsButtonAction(ActionEvent event) throws Exception {
+        toScene("client/list_clients.fxml", "List Clients", event);
     }
 
     @FXML
-    void mainInfoButtonAction(ActionEvent event) {
+    private void mainTicketsButtonAction(ActionEvent event) throws Exception {
+        toScene("ticket/list_tickets.fxml", "List Tickets", event);
+    }
 
+    private void toScene(String path, String title, ActionEvent event) throws Exception {
+
+        double width = ((Node) event.getSource()).getScene().getWidth();
+        double height = ((Node) event.getSource()).getScene().getHeight();
+
+        Parent root = FXMLLoader.load(getClass().getResource("../../../../../fxml/" + path));
+        Scene scene = new Scene(root, width, height);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override
@@ -83,18 +96,5 @@ public class EditRouteController implements Initializable {
     public void writeInFields(Route route) {
         fromTextField.setText(route.getStartPoint());
         toTextField.setText(route.getEndPoint());
-    }
-
-    private void toScene(String path, String title, ActionEvent event) throws Exception {
-
-        double width = ((Node) event.getSource()).getScene().getWidth();
-        double height = ((Node) event.getSource()).getScene().getHeight();
-
-        Parent root = FXMLLoader.load(getClass().getResource(path));
-        Scene scene = new Scene(root, width, height);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.show();
     }
 }

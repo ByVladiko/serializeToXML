@@ -1,4 +1,4 @@
-package lab.first.controllers.FXModels;
+package lab.first.view.model;
 
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
