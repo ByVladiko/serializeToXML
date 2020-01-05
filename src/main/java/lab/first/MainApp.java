@@ -31,6 +31,7 @@ public class MainApp extends Application {
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
+        primaryStage.setTitle("List Routes");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
