@@ -1,11 +1,13 @@
 package lab.first.model;
 
-import javafx.scene.control.Alert;
-
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@XmlRootElement(name = "Client")
 public class Client {
     private UUID id;
     private String firstName;

@@ -3,8 +3,6 @@ package lab.first.model;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Airship {
     private UUID id;

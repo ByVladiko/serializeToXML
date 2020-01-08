@@ -13,6 +13,10 @@ import lab.first.view.controllers.client.ClientListController;
 import lab.first.view.controllers.route.RouteListController;
 import lab.first.model.Route;
 import lab.first.view.controllers.ticket.TicketListController;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 public class MainApp extends Application {
@@ -50,12 +54,29 @@ public class MainApp extends Application {
         Airship.airships.add(airship2);
         Airship.airships.add(airship3);
 
-        TicketListController.tableTickets.add(new Ticket(airship1, route1));
-        TicketListController.tableTickets.add(new Ticket(airship2, route2));
-        TicketListController.tableTickets.add(new Ticket(airship3, route3));
-        TicketListController.tableTickets.add(new Ticket(airship2, route2));
-        TicketListController.tableTickets.add(new Ticket(airship2, route1));
-        TicketListController.tableTickets.add(new Ticket(airship1, route3));
+        Ticket ticket1 = new Ticket(airship1, route1);
+        Ticket ticket2 = new Ticket(airship2, route2);
+        Ticket ticket3 = new Ticket(airship3, route3);
+        Ticket ticket4 = new Ticket(airship2, route2);
+        Ticket ticket5 = new Ticket(airship2, route1);
+        Ticket ticket6 = new Ticket(airship1, route3);
+
+        TicketListController.tableTickets.add(ticket1);
+        TicketListController.tableTickets.add(ticket2);
+        TicketListController.tableTickets.add(ticket3);
+        TicketListController.tableTickets.add(ticket4);
+        TicketListController.tableTickets.add(ticket5);
+        TicketListController.tableTickets.add(ticket6);
+
+        StringWriter writer = new StringWriter();
+
+        JAXBContext context = JAXBContext.newInstance(Ticket.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.marshal(ticket1, writer);
+
+        String result = writer.toString();
+        System.out.println(result);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/route/list_routes.fxml"));
         Parent root = loader.load();

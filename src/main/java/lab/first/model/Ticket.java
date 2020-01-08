@@ -1,12 +1,18 @@
 package lab.first.model;
 
+import javax.xml.bind.annotation.*;
 import java.util.Objects;
 import java.util.UUID;
 
+@XmlRootElement(name = "Ticket")
 public class Ticket {
+
     private UUID id;
     private Airship airship;
     private Route route;
+
+    public Ticket() {
+    }
 
     public Ticket(Airship airship, Route route) {
         this.id = UUID.randomUUID();
