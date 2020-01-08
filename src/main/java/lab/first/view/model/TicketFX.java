@@ -1,36 +1,39 @@
 package lab.first.view.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import lab.first.view.ConverterToFX;
-import lab.first.model.Route;
 import lab.first.model.Ticket;
-
 import java.util.UUID;
 
 public class TicketFX {
-    private UUID id;
+    private StringProperty id;
     private AirshipFX airship;
-    private ObservableList<Route> routeList; //Здесь должно быть ObservableList<RouteFX>, но я не знаю как это реализовать
+    private RouteFX route;
 
-    public TicketFX(UUID id, AirshipFX airship, ObservableList<Route> routeList) {
+    private ConverterToFX converter = new ConverterToFX();
+
+    public TicketFX(StringProperty id, AirshipFX airship, RouteFX route) {
         this.id = id;
         this.airship = airship;
-        this.routeList = routeList;
+        this.route = route;
     }
 
     public TicketFX(Ticket ticket) {
-        ConverterToFX converter = new ConverterToFX();
-        id = ticket.getId();
-        airship = converter.convertToFx(ticket).getAirship();
-        routeList = FXCollections.observableArrayList(ticket.getRouteList());
+        this.id = new SimpleStringProperty(ticket.getId().toString());
+        this.airship = converter.convertToFx(ticket).getAirship();
+        this.route = converter.convertToFx(ticket).getRoute();
     }
 
     public UUID getId() {
+        return UUID.fromString(id.toString());
+    }
+
+    public StringProperty idProperty() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(StringProperty id) {
         this.id = id;
     }
 
@@ -42,11 +45,11 @@ public class TicketFX {
         this.airship = airship;
     }
 
-    public ObservableList<Route> getRouteList() {
-        return routeList;
+    public RouteFX getRoute() {
+        return route;
     }
 
-    public void setRouteList(ObservableList<Route> routeList) {
-        this.routeList = routeList;
+    public void setRoute(RouteFX route) {
+        this.route = route;
     }
 }

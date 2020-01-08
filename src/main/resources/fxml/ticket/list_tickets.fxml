@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/1.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lab.first.view.controllers.client.ClientListController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/1.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lab.first.view.controllers.ticket.TicketListController">
    <children>
       <VBox HBox.hgrow="SOMETIMES">
          <children>
@@ -69,17 +69,17 @@
                               <Font size="20.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="firstNameTextField" focusTraversable="false" promptText="First name" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="firstAirshipTextField" focusTraversable="false" promptText="Airship" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="middleNameTextField" focusTraversable="false" promptText="Middle name" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="routeFromTextField" focusTraversable="false" promptText="From" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="lastNameTextField" focusTraversable="false" onInputMethodTextChanged="#idInputTextFieldAction" promptText="Last name" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="routeToTextField" focusTraversable="false" promptText="To">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -96,7 +96,7 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </BorderPane.margin>
                      <children>
-                        <Button fx:id="addRouteButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addClientButtonAction" style="-fx-background-color: #0271BB;" text="Add" textFill="WHITE" HBox.hgrow="ALWAYS">
+                        <Button fx:id="addTicketButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addTicketButtonAction" style="-fx-background-color: #0271BB;" text="Add" textFill="WHITE" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -104,7 +104,7 @@
                               <Point3D />
                            </rotationAxis>
                         </Button>
-                        <Button fx:id="editRouteButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#editClientButtonAction" style="-fx-background-color: #0271BB;" text="Edit" textFill="WHITE" HBox.hgrow="ALWAYS">
+                        <Button fx:id="editTicketButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#editTicketButtonAction" style="-fx-background-color: #0271BB;" text="Edit" textFill="WHITE" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -112,7 +112,7 @@
                               <Point3D />
                            </rotationAxis>
                         </Button>
-                        <Button fx:id="deleteClientButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#deleteClientButtonAction" style="-fx-background-color: #0271BB;" text="Delete" textFill="WHITE" HBox.hgrow="ALWAYS">
+                        <Button fx:id="deleteTicketButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#deleteTicketButtonAction" style="-fx-background-color: #0271BB;" text="Delete" textFill="WHITE" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -124,12 +124,12 @@
                   </HBox>
                </bottom>
                <center>
-                  <TableView fx:id="tableViewClients" focusTraversable="false" prefHeight="319.0" prefWidth="932.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="tableViewTickets" focusTraversable="false" prefHeight="319.0" prefWidth="932.0" BorderPane.alignment="CENTER">
                      <columns>
-                        <TableColumn fx:id="tableClientColumnId" minWidth="-1.0" prefWidth="-1.0" text="ID" />
-                        <TableColumn fx:id="tableClientColumnFirstName" minWidth="-1.0" prefWidth="-1.0" text="First name" />
-                        <TableColumn fx:id="tableClientsColumnMiddleName" minWidth="-1.0" prefWidth="-1.0" text="Middle name" />
-                        <TableColumn fx:id="tableClientsColumnLastName" minWidth="-1.0" prefWidth="-1.0" text="Last name" />
+                        <TableColumn fx:id="tableTicketColumnId" minWidth="-1.0" prefWidth="-1.0" text="ID" />
+                        <TableColumn fx:id="tableTicketColumnAirship" minWidth="-1.0" prefWidth="-1.0" text="Airship" />
+                        <TableColumn fx:id="tableTicketColumnRouteFrom" minWidth="-1.0" prefWidth="-1.0" text="From" />
+                        <TableColumn fx:id="tableTicketColumnRouteTo" minWidth="-1.0" prefWidth="-1.0" text="To" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

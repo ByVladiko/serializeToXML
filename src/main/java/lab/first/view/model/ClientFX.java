@@ -6,17 +6,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lab.first.model.Client;
 import lab.first.model.Ticket;
-
+import lab.first.view.ConverterToFX;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class ClientFX {
-    private UUID id;
+    private StringProperty id;
     private StringProperty firstName;
     private StringProperty middleName;
     private StringProperty lastName;
-    private ObservableList<Ticket> tickets; //Здесь должно быть ObservableList<TicketFX>, но я не знаю как это реализовать
+    private ObservableList<TicketFX> tickets;
 
-    public ClientFX(UUID id, StringProperty firstName, StringProperty middleName, StringProperty lastName, ObservableList<Ticket> tickets) {
+    private ConverterToFX converter = new ConverterToFX();
+
+    public ClientFX(StringProperty id, StringProperty firstName, StringProperty middleName, StringProperty lastName, ObservableList<TicketFX> tickets) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -25,18 +29,25 @@ public class ClientFX {
     }
 
     public ClientFX(Client client) {
-        id = client.getId();
+        id = new SimpleStringProperty(client.getId().toString());
         firstName = new SimpleStringProperty(client.getFirstName());
         middleName = new SimpleStringProperty(client.getMiddleName());
         lastName = new SimpleStringProperty(client.getLastName());
-        tickets = FXCollections.observableArrayList(client.getTickets());
+        tickets = FXCollections.observableArrayList();
+        for (int i = 0; i < client.getTickets().size(); i++) {
+            tickets.add(converter.convertToFx(client.getTickets().get(i)));
+        }
     }
 
     public UUID getId() {
+        return UUID.fromString(id.toString());
+    }
+
+    public StringProperty idProperty() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(StringProperty id) {
         this.id = id;
     }
 
@@ -76,11 +87,19 @@ public class ClientFX {
         this.lastName.set(lastName);
     }
 
-    public ObservableList<Ticket> getTickets() {
+    public ObservableList<TicketFX> getTicketsFX() {
         return tickets;
     }
 
-    public void setTickets(ObservableList<Ticket> tickets) {
+    public List<Ticket> getTickets() {
+        ArrayList<Ticket> tickets = new ArrayList<>();
+        for (int i = 0; i < this.tickets.size(); i++) {
+            tickets.add(converter.convertFxToModel(this.tickets.get(i)));
+        }
+        return tickets;
+    }
+
+    public void setTickets(ObservableList<TicketFX> tickets) {
         this.tickets = tickets;
     }
 }

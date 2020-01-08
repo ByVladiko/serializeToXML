@@ -1,5 +1,7 @@
 package lab.first.model;
 
+import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

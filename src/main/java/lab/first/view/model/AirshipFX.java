@@ -5,32 +5,35 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lab.first.model.Airship;
-
 import java.util.UUID;
 
 public class AirshipFX {
-    private UUID id;
+    private StringProperty id;
     private StringProperty model;
     private LongProperty numberOfSeat;
 
-    public AirshipFX(UUID id, StringProperty model, LongProperty numberOfSeat) {
+    public AirshipFX(StringProperty id, StringProperty model, LongProperty numberOfSeat) {
         this.id = id;
         this.model = model;
         this.numberOfSeat = numberOfSeat;
     }
 
     public AirshipFX(Airship airship) {
-        id = airship.getId();
+        id = new SimpleStringProperty(airship.getId().toString());
         model = new SimpleStringProperty(airship.getModel());
         numberOfSeat = new SimpleLongProperty(airship.getNumberOfSeat());
     }
 
     public UUID getId() {
+        return UUID.fromString(id.toString());
+    }
+
+    public StringProperty idProperty() {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id.set(id);
     }
 
     public String getModel() {

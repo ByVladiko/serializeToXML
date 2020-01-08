@@ -51,7 +51,7 @@ public class ConverterToFX {
 
     public Ticket convertFxToModel(TicketFX ticketFx) {
 
-        return new Ticket(ticketFx.getId(), convertFxToModel(ticketFx.getAirship()), ticketFx.getRouteList());
+        return new Ticket(ticketFx.getId(), convertFxToModel(ticketFx.getAirship()), convertFxToModel(ticketFx.getRoute()));
 
     }
 }

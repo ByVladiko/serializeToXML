@@ -1,28 +1,35 @@
 package lab.first.model;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Ticket {
     private UUID id;
     private Airship airship;
-    private List<Route> routeList;
+    private Route route;
 
-    public Ticket(Airship airship, List<Route> routeList) {
+    public Ticket(Airship airship, Route route) {
         this.id = UUID.randomUUID();
         this.airship = airship;
-        this.routeList = routeList;
+        this.route = route;
     }
 
-    public Ticket(UUID id, Airship airship, List<Route> routeList) {
+    public Ticket(UUID id, Airship airship, Route route) {
         this.id = id;
         this.airship = airship;
-        this.routeList = routeList;
+        this.route = route;
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     public void setId(UUID id) {
@@ -37,14 +44,6 @@ public class Ticket {
         this.airship = airship;
     }
 
-    public List<Route> getRouteList() {
-        return routeList;
-    }
-
-    public void setTickets(List<Route> routeList) {
-        this.routeList = routeList;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,16 +51,15 @@ public class Ticket {
         Ticket ticket = (Ticket) o;
         return id == ticket.id &&
                 Objects.equals(airship, ticket.airship) &&
-                Objects.equals(routeList, ticket.routeList);
+                Objects.equals(route, ticket.route);
     }
 
     @Override
     public int hashCode() {
         int result = 17;
-        for (int i = 0; i < routeList.size(); i++) {
-            result = 31 * result + routeList.hashCode();
-        }
-        return airship.hashCode() + result;
+        result = 31 * result + (airship == null ? 0 : airship.hashCode());
+        result = 31 * result + (route == null ? 0 : route.hashCode());
+        return result;
     }
 
     @Override
@@ -69,7 +67,7 @@ public class Ticket {
         return "Ticket{" +
                 "id=" + id +
                 ", airship=" + airship +
-                ", routeList=" + routeList +
+                ", route=" + route +
                 '}';
     }
 }

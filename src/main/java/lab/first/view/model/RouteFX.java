@@ -3,31 +3,34 @@ package lab.first.view.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lab.first.model.Route;
-
 import java.util.UUID;
 
 public class RouteFX {
-    private UUID id;
+    private StringProperty id;
     private StringProperty startPoint;
     private StringProperty endPoint;
 
-    public RouteFX(UUID id, StringProperty startPoint, StringProperty endPoint) {
+    public RouteFX(StringProperty id, StringProperty startPoint, StringProperty endPoint) {
         this.id = id;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
     }
 
     public RouteFX(Route route) {
-        id = route.getId();
+        id = new SimpleStringProperty(route.getId().toString());
         startPoint = new SimpleStringProperty(route.getStartPoint());
         endPoint = new SimpleStringProperty(route.getEndPoint());
     }
 
     public UUID getId() {
+        return UUID.fromString(id.toString());
+    }
+
+    public StringProperty idProperty() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(StringProperty id) {
         this.id = id;
     }
 

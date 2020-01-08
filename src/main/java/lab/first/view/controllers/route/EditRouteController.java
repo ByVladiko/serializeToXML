@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -49,6 +50,17 @@ public class EditRouteController implements Initializable {
 
     @FXML
     void saveRouteButtonAction(ActionEvent event) throws  Exception {
+        String regex = "^[a-zA-Z0-9А-Яа-я._-]{3,}$";
+        if(!fromTextField.getText().matches(regex) || !toTextField.getText().matches(regex)) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setTitle("Attention");
+            a.setHeaderText("Ops!");
+            String version = System.getProperty("java.version");
+            String content = String.format("Incorrect input", version);
+            a.setContentText(content);
+            a.showAndWait();
+            return;
+        }
         editRoute.setStartPoint(fromTextField.getText());
         editRoute.setEndPoint(toTextField.getText());
         for (int i = 0; i < RouteListController.tableRoutes.size(); i++) {

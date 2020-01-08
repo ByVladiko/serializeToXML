@@ -1,12 +1,17 @@
 package lab.first.model;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Airship {
     private UUID id;
     private String model;
     private long numberOfSeat;
+
+    public static ArrayList<Airship> airships = new ArrayList<>();
 
     public Airship(String model, long numberOfSeat) {
         this.model = model;

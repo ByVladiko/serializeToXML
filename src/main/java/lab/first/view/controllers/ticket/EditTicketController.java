@@ -1,7 +1,9 @@
-package lab.first.view.controllers.client;
+package lab.first.view.controllers.ticket;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,16 +12,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
-import lab.first.model.Client;
+import lab.first.model.Airship;
+import lab.first.model.Route;
+import lab.first.model.Ticket;
+import lab.first.view.controllers.route.RouteListController;
 
-public class EditClientController {
+public class EditTicketController {
 
-    private Client editClient;
+    private Ticket editTicket;
 
-    public void setEditClient(Client editClient) {
-        this.editClient = editClient;
+    public Ticket getEditTicket() {
+        return editTicket;
+    }
+
+    public void setEditTicket(Ticket editTicket) {
+        this.editTicket = editTicket;
     }
 
     @FXML
@@ -38,13 +47,10 @@ public class EditClientController {
     private Button mainClientsButton;
 
     @FXML
-    private TextField firstNameTextField;
+    private ComboBox<Route> routeChoiceBox;
 
     @FXML
-    private TextField middleNameField;
-
-    @FXML
-    private TextField lastNameTextField;
+    private ComboBox<Airship> airshipChoiceBox;
 
     @FXML
     private Button saveClientButton;
@@ -78,38 +84,32 @@ public class EditClientController {
     }
 
     @FXML
-    void saveClientButtonAction(ActionEvent event) throws Exception {
-        String regex = "^[a-zA-Z0-9А-Яа-я._-]{3,}$";
-        if(!firstNameTextField.getText().matches(regex) || !middleNameField.getText().matches(regex)) {
+    void saveClientButtonAction(ActionEvent event) {
+        if(routeChoiceBox.getValue() == null || airshipChoiceBox.getValue() == null) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Attention");
             a.setHeaderText("Ops!");
             String version = System.getProperty("java.version");
-            String content = String.format("Incorrect input", version);
+            String content = String.format("The choice boxes should be not empty", version);
             a.setContentText(content);
             a.showAndWait();
             return;
         }
-        editClient.setFirstName(firstNameTextField.getText());
-        editClient.setMiddleName(middleNameField.getText());
-        editClient.setLastName(lastNameTextField.getText());
-        for (int i = 0; i < ClientListController.tableClients.size(); i++) {
-            if (ClientListController.tableClients.get(i).getId() == editClient.getId()) {
-                ClientListController.tableClients.set(i, editClient);
+        editTicket.setRoute(editTicket.getRoute());
+        editTicket.setAirship(editTicket.getAirship());
+        for (int i = 0; i < TicketListController.tableTickets.size(); i++) {
+            if (TicketListController.tableTickets.get(i).getId() == editTicket.getId()) {
+                TicketListController.tableTickets.set(i, editTicket);
             }
             break;
         }
-        toScene("client/list_clients.fxml", "List Clients", event);
     }
 
     @FXML
     void initialize() {
-
-    }
-
-    public void writeInFields(Client client) {
-        firstNameTextField.setText(client.getFirstName());
-        middleNameField.setText(client.getMiddleName());
-        lastNameTextField.setText(client.getLastName());
+        routeChoiceBox.setItems(RouteListController.tableRoutes);
+        airshipChoiceBox.setItems(FXCollections.observableArrayList(Airship.airships));
+        routeChoiceBox.setValue(editTicket.getRoute());
+        airshipChoiceBox.setValue(editTicket.getAirship());
     }
 }
