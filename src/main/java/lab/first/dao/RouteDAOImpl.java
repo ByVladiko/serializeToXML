@@ -4,7 +4,7 @@ import lab.first.model.Route;
 
 import java.util.List;
 
-public class RouteDAOImpl implements RouteDAO {
+public class RouteDAOImpl implements DAO {
 
     @Override
     public void addRoute(Route route) {

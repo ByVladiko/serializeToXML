@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.*;
 import java.util.Objects;
 import java.util.UUID;
 
-@XmlRootElement(name = "Route")
+@XmlRootElement(name = "route")
 public class Route {
     private UUID id;
     private String startPoint; //pointOfDeparture
@@ -53,11 +53,7 @@ public class Route {
 
     @Override
     public String toString() {
-        return "Route{" +
-                "id=" + id +
-                ", startPoint='" + startPoint + '\'' +
-                ", endPoint='" + endPoint + '\'' +
-                '}';
+        return startPoint + " --> " + endPoint;
     }
 
     @Override

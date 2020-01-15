@@ -4,7 +4,7 @@ import lab.first.model.Route;
 
 import java.util.List;
 
-public interface RouteDAO {
+public interface DAO {
 
     public void addRoute(Route route);
 

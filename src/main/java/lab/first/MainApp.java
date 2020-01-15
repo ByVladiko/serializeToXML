@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import lab.first.model.Airship;
 import lab.first.model.Client;
 import lab.first.model.Ticket;
+import lab.first.serialize.RouteXmlImpl;
+import lab.first.serialize.Xml;
 import lab.first.view.ConverterToFX;
 import lab.first.view.controllers.client.ClientListController;
 import lab.first.view.controllers.route.RouteListController;
@@ -17,7 +19,6 @@ import lab.first.view.controllers.ticket.TicketListController;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import java.io.StringWriter;
-import java.util.ArrayList;
 
 public class MainApp extends Application {
 
@@ -68,15 +69,13 @@ public class MainApp extends Application {
         TicketListController.tableTickets.add(ticket5);
         TicketListController.tableTickets.add(ticket6);
 
-        StringWriter writer = new StringWriter();
-
-        JAXBContext context = JAXBContext.newInstance(Ticket.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        marshaller.marshal(ticket1, writer);
-
-        String result = writer.toString();
-        System.out.println(result);
+        Xml serial = new RouteXmlImpl();
+        serial.save(route1);
+        serial.save(route2);
+        serial.delete(route1);
+        for (int i = 0; i < serial.read().size(); i++) {
+            System.out.println(serial.read().get(i).toString());
+        }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/route/list_routes.fxml"));
         Parent root = loader.load();

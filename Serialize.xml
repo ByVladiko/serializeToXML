@@ -1,0 +1,9 @@
+<repository>
+  <routes>
+    
+  <route id="315b1333-d66e-4a33-aa0e-9d06d7a47f60">
+      <startPoint>Kostroma</startPoint>
+      <endPoint>Saratov</endPoint>
+    </route>
+  </routes>
+</repository>

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.*;
 import java.util.Objects;
 import java.util.UUID;
 
-@XmlRootElement(name = "Ticket")
+@XmlRootElement(name = "ticket")
 public class Ticket {
 
     private UUID id;
@@ -26,10 +26,12 @@ public class Ticket {
         this.route = route;
     }
 
+    @XmlAttribute
     public UUID getId() {
         return id;
     }
 
+    @XmlElement
     public Route getRoute() {
         return route;
     }
@@ -42,6 +44,7 @@ public class Ticket {
         this.id = id;
     }
 
+    @XmlElement
     public Airship getAirship() {
         return airship;
     }

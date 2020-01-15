@@ -1,13 +1,11 @@
 package lab.first.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@XmlRootElement(name = "Client")
+@XmlRootElement(name = "client")
 public class Client {
     private UUID id;
     private String firstName;
@@ -38,12 +36,7 @@ public class Client {
         this.tickets = tickets;
     }
 
-    public Client() {
-        this.firstName = "Undefined";
-        this.middleName = "Undefined";
-        this.lastName = "Undefined";
-        this.tickets = new ArrayList<Ticket>();
-    }
+    public Client() {}
 
     public UUID getId() {
         return id;

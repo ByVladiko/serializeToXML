@@ -1,9 +1,13 @@
 package lab.first.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
+@XmlRootElement(name = "airship")
 public class Airship {
     private UUID id;
     private String model;
@@ -23,6 +27,9 @@ public class Airship {
         this.numberOfSeat = numberOfSeat;
     }
 
+    public Airship() {}
+
+    @XmlAttribute
     public UUID getId() {
         return id;
     }
@@ -31,6 +38,7 @@ public class Airship {
         this.id = id;
     }
 
+    @XmlElement
     public String getModel() {
         return model;
     }
@@ -39,6 +47,7 @@ public class Airship {
         this.model = model;
     }
 
+    @XmlElement
     public long getNumberOfSeat() {
         return numberOfSeat;
     }
@@ -49,11 +58,7 @@ public class Airship {
 
     @Override
     public String toString() {
-        return "Airship{" +
-                "ID=" + id +
-                ", model='" + model + '\'' +
-                ", numberOfSeat=" + numberOfSeat +
-                '}';
+        return String.format("%s(%d)", model, numberOfSeat);
     }
 
     @Override
