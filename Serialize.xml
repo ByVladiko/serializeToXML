@@ -1,9 +1,141 @@
 <repository>
   <routes>
     
-  <route id="315b1333-d66e-4a33-aa0e-9d06d7a47f60">
+  <route id="b85a1492-9b27-487d-82bd-a9b67505ae61">
       <startPoint>Kostroma</startPoint>
       <endPoint>Saratov</endPoint>
     </route>
   </routes>
+<tickets>
+    <ticket id="616e1990-5c18-4839-a147-d3fe81e12c2d">
+      <airship id="365e8cef-0cf7-4352-ab84-e13a53a02869">
+        <model>Aerobus</model>
+        <numberOfSeat>5</numberOfSeat>
+      </airship>
+      <route id="d3604a31-1b1f-45bf-bfc8-c63a08b06ec3">
+        <startPoint>L.A.</startPoint>
+        <endPoint>Moscow</endPoint>
+      </route>
+    </ticket>
+  <ticket id="99665c72-01cc-4deb-8fdb-aa8f6cf634e8">
+      <airship id="531df6cd-447b-4943-9e93-6fb1b20ce070">
+        <model>Aeroflot</model>
+        <numberOfSeat>3</numberOfSeat>
+      </airship>
+      <route id="b85a1492-9b27-487d-82bd-a9b67505ae61">
+        <startPoint>Kostroma</startPoint>
+        <endPoint>Saratov</endPoint>
+      </route>
+    </ticket>
+  </tickets>
+<clients>
+    <client id="e39a69b8-05df-42bf-9285-74a19bd62362">
+      <firstName>Arkadii</firstName>
+      <middleName>Eremeev</middleName>
+      <lastName>Anatolevich</lastName>
+      <tickets>
+        <ticket id="ac521515-2960-4113-9ede-b44144fc82d0">
+          <airship id="aaf2a067-70bc-4e3f-ad73-fd0aa62f05c5">
+            <model>Aerobus</model>
+            <numberOfSeat>5</numberOfSeat>
+          </airship>
+          <route id="20b4916b-cd04-4877-b9ae-48ef287b316a">
+            <startPoint>L.A.</startPoint>
+            <endPoint>Moscow</endPoint>
+          </route>
+        </ticket>
+        <ticket id="56b75425-70ce-4a6a-9f83-9faeddafbc66">
+          <airship id="6885626f-7efa-4fad-a23c-e94944a79560">
+            <model>Aeroflot</model>
+            <numberOfSeat>3</numberOfSeat>
+          </airship>
+          <route id="0e600676-0107-466d-bd51-2d426f135b78">
+            <startPoint>Kostroma</startPoint>
+            <endPoint>Saratov</endPoint>
+          </route>
+        </ticket>
+      </tickets>
+    </client>
+  <client id="6904ee40-c2a1-43d8-a901-fa10e656bcf1">
+      <firstName>Arkadii</firstName>
+      <middleName>Eremeev</middleName>
+      <lastName>Anatolevich</lastName>
+      <tickets>
+        <ticket id="ed84045a-c2bd-42b8-a6cd-d5a1fec99503">
+          <airship id="2e3919fc-99ed-49a3-a4f4-fe5742123e86">
+            <model>Aerobus</model>
+            <numberOfSeat>5</numberOfSeat>
+          </airship>
+          <route id="28b9fd19-db71-4093-abc9-f5c23af3d160">
+            <startPoint>L.A.</startPoint>
+            <endPoint>Moscow</endPoint>
+          </route>
+        </ticket>
+        <ticket id="c820104c-405d-41d5-9944-6bffb81dc503">
+          <airship id="db0136d5-a439-4497-8fde-8db6b6458df7">
+            <model>Aeroflot</model>
+            <numberOfSeat>3</numberOfSeat>
+          </airship>
+          <route id="6c4189a1-e8bc-4ebd-a730-db3c0fd2c444">
+            <startPoint>Kostroma</startPoint>
+            <endPoint>Saratov</endPoint>
+          </route>
+        </ticket>
+      </tickets>
+    </client>
+  <client id="ee46b8d3-3c8b-44ff-bb77-5ab63d0fa1bb">
+      <firstName>Arkadii</firstName>
+      <middleName>Eremeev</middleName>
+      <lastName>Anatolevich</lastName>
+      <tickets>
+        <ticket id="83361822-ff67-4ddb-9429-c338edabe3c9">
+          <airship id="e0c95dbd-20f3-4766-972c-89f29762bd18">
+            <model>Aerobus</model>
+            <numberOfSeat>5</numberOfSeat>
+          </airship>
+          <route id="6d3eb1ac-c216-4dd4-beb6-ac10cc771399">
+            <startPoint>L.A.</startPoint>
+            <endPoint>Moscow</endPoint>
+          </route>
+        </ticket>
+        <ticket id="4474559b-30ca-48fd-9751-97d6202429c5">
+          <airship id="ad306a11-9ef4-410a-818f-5cf238da3aa4">
+            <model>Aeroflot</model>
+            <numberOfSeat>3</numberOfSeat>
+          </airship>
+          <route id="8028b1d5-73ae-49a9-b6ac-2a88284bd4c6">
+            <startPoint>Kostroma</startPoint>
+            <endPoint>Saratov</endPoint>
+          </route>
+        </ticket>
+      </tickets>
+    </client>
+  <client id="c22d69df-e48c-40bc-8173-e74bfeef4c1f">
+      <firstName>Arkadii</firstName>
+      <middleName>Eremeev</middleName>
+      <lastName>Anatolevich</lastName>
+      <tickets>
+        <ticket id="7a119090-2a15-4320-8b16-3f9230b26389">
+          <airship id="8a068c7e-b253-4c9d-b9c1-cdbcaf1e3769">
+            <model>Aerobus</model>
+            <numberOfSeat>5</numberOfSeat>
+          </airship>
+          <route id="ed53ec91-6bf5-463b-acfd-f9902f742e8d">
+            <startPoint>L.A.</startPoint>
+            <endPoint>Moscow</endPoint>
+          </route>
+        </ticket>
+        <ticket id="abebab56-277d-42c8-bc0d-74da547f30a9">
+          <airship id="9a049e97-8b35-4014-9f75-4af55abed9ad">
+            <model>Aeroflot</model>
+            <numberOfSeat>3</numberOfSeat>
+          </airship>
+          <route id="bc97235b-adfc-4ed5-bac9-eaf28184bd5e">
+            <startPoint>Kostroma</startPoint>
+            <endPoint>Saratov</endPoint>
+          </route>
+        </ticket>
+      </tickets>
+    </client>
+  </clients>
 </repository>

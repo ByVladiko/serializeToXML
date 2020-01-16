@@ -1,5 +1,8 @@
 package lab.first.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,7 @@ public class Client {
 
     public Client() {}
 
+    @XmlAttribute
     public UUID getId() {
         return id;
     }
@@ -46,6 +50,7 @@ public class Client {
         this.id = id;
     }
 
+    @XmlElement
     public String getFirstName() {
         return firstName;
     }
@@ -54,6 +59,7 @@ public class Client {
         this.firstName = firstName;
     }
 
+    @XmlElement
     public String getMiddleName() {
         return middleName;
     }
@@ -62,6 +68,7 @@ public class Client {
         this.middleName = middleName;
     }
 
+    @XmlElement
     public String getLastName() {
         return lastName;
     }
@@ -74,6 +81,8 @@ public class Client {
         return tickets;
     }
 
+    @XmlElementWrapper(name = "tickets")
+    @XmlElement(name="ticket")
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }

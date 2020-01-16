@@ -49,11 +49,11 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
     }
 
     @Override
-    public void save(Route obj) {
+    public void save(Route route) {
 
         // Создается построитель документа
         try {
-            Document document = null;
+            Document document;
             if (!file.exists()) {
                 file.createNewFile();
                 document = documentBuilder.newDocument();
@@ -61,7 +61,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
                 writeDocument(document, file);
             }
             document = documentBuilder.parse(file);
-            writeDocument(addNewNode(document, obj), file);
+            writeDocument(addNewNode(document, route), file);
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -89,6 +89,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
         writeDocument(document, file);
     }
 
+    @Override
     Document addNewNode(Document document, Route route) throws TransformerFactoryConfigurationError, DOMException {
         // Получаем корневой элемент
         Node root = document.getElementsByTagName("routes").item(0);

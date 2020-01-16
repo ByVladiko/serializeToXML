@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import lab.first.model.Airship;
 import lab.first.model.Client;
 import lab.first.model.Ticket;
+import lab.first.serialize.ClientXmlImpl;
 import lab.first.serialize.RouteXmlImpl;
 import lab.first.serialize.Xml;
 import lab.first.view.ConverterToFX;
@@ -18,7 +19,10 @@ import lab.first.view.controllers.ticket.TicketListController;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 
 public class MainApp extends Application {
 
@@ -69,13 +73,39 @@ public class MainApp extends Application {
         TicketListController.tableTickets.add(ticket5);
         TicketListController.tableTickets.add(ticket6);
 
+        ArrayList<Ticket> tickets = new ArrayList<>();
+        tickets.add(ticket1);
+        tickets.add(ticket2);
+
+        client1.setTickets(tickets);
+
+        JAXBContext context = JAXBContext.newInstance(Client.class);
+        Marshaller marshaller = context.createMarshaller();
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        StringWriter writer = new StringWriter();
+//        System.out.println(unmarshaller.unmarshal(new StringReader("<ticket id=\"99665c72-01cc-4deb-8fdb-aa8f6cf634e8\"><airship id=\"531df6cd-447b-4943-9e93-6fb1b20ce070\"><model>Aeroflot</model><numberOfSeat>3</numberOfSeat></airship><route id=\"b85a1492-9b27-487d-82bd-a9b67505ae61\"><startPoint>Kostroma</startPoint><endPoint>Saratov</endPoint></route></ticket>")));
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        // сама сериализация
+        marshaller.marshal(client1, writer);
+//        System.out.println(writer);
+        StringReader sr = new StringReader(writer.toString());
+        Client client = (Client) unmarshaller.unmarshal(sr);
+//        System.out.println(client);
+
+
         Xml serial = new RouteXmlImpl();
-        serial.save(route1);
-        serial.save(route2);
+//        serial.save(route1);
+//        serial.save(route2);
         serial.delete(route1);
-        for (int i = 0; i < serial.read().size(); i++) {
-            System.out.println(serial.read().get(i).toString());
-        }
+//        for (int i = 0; i < serial.read().size(); i++) {
+//            System.out.println(serial.read().get(i).toString());
+//        }
+//        Xml serialTicket = new TicketXmlImpl();
+//        serialTicket.read();
+
+        Xml serialClient = new ClientXmlImpl();
+        serialClient.save(client1);
+
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/route/list_routes.fxml"));
         Parent root = loader.load();

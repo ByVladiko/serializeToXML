@@ -31,6 +31,10 @@ public class Ticket {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     @XmlElement
     public Route getRoute() {
         return route;
@@ -38,10 +42,6 @@ public class Ticket {
 
     public void setRoute(Route route) {
         this.route = route;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     @XmlElement

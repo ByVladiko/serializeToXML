@@ -1,7 +1,5 @@
 package lab.first.serialize;
 
-import lab.first.model.Route;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 
 import javax.xml.transform.*;
