@@ -28,14 +28,17 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
     @Override
     public List<Route> read() {
         Document document = null;
+        List<Route>  list = new ArrayList<>();
+        if(!file.exists()) {
+            return list;
+        }
         try {
-            document = documentBuilder.parse("Serialize.xml");
+            document = documentBuilder.parse(file);
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Route> list = new ArrayList<>();
         Element element = (Element) document.getElementsByTagName("routes").item(0);
         NodeList routes = element.getElementsByTagName("route");
         for (int i = 0; i < routes.getLength(); i++) {
@@ -61,6 +64,10 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
                 writeDocument(document, file);
             }
             document = documentBuilder.parse(file);
+            if (checkAndUpdate(document, route)) {
+                writeDocument(document, file);
+                return;
+            }
             writeDocument(addNewNode(document, route), file);
         } catch (SAXException e) {
             e.printStackTrace();
@@ -87,6 +94,22 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
             }
         }
         writeDocument(document, file);
+    }
+
+    @Override
+    boolean checkAndUpdate(Document doc, Route route) {
+        Boolean flag = false;
+        NodeList routesList = doc.getElementsByTagName("route");
+        Element element = null;
+        for (int i = 0; i < routesList.getLength(); i++) {
+            element = (Element) routesList.item(i);
+            if (element.getAttribute("id").equals(route.getId().toString())) {
+                flag = true;
+                element.getElementsByTagName("startPoint").item(0).getFirstChild().setNodeValue(route.getStartPoint());
+                element.getElementsByTagName("endPoint").item(0).getFirstChild().setNodeValue(route.getEndPoint());
+            }
+        }
+        return flag;
     }
 
     @Override

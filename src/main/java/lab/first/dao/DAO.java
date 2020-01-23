@@ -1,18 +1,16 @@
 package lab.first.dao;
 
-import lab.first.model.Route;
-
 import java.util.List;
 
-public interface DAO {
+public interface DAO<T> {
 
-    public void addRoute(Route route);
+    public void add(T t);
 
-    public  void updateRoute(Route route);
+    public  void update(T t);
 
-    public void removeRoute(int id);
+    public void remove(T t);
 
-    public Route getRouteById(int id);
+    public T getById(String id);
 
-    public List<Route> listRoutes();
+    public List<T> getList();
 }

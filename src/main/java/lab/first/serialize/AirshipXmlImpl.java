@@ -66,6 +66,10 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>{
                 writeDocument(document, file);
             }
             document = documentBuilder.parse(file);
+            if (checkAndUpdate(document, airship)) {
+                writeDocument(document, file);
+                return;
+            }
             writeDocument(addNewNode(document, airship), file);
         } catch (SAXException e) {
             e.printStackTrace();
@@ -132,4 +136,21 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>{
         // Записываем XML в файл
         return document;
     }
+
+    @Override
+    boolean checkAndUpdate(Document doc, Airship airship) {
+        Boolean flag = false;
+        NodeList airshipsList = doc.getElementsByTagName("airship");
+        Element element = null;
+        for (int i = 0; i < airshipsList.getLength(); i++) {
+            element = (Element) airshipsList.item(i);
+            if (element.getAttribute("id").equals(airship.getId().toString())) {
+                flag = true;
+                element.getElementsByTagName("model").item(0).getFirstChild().setNodeValue(airship.getModel());
+                element.getElementsByTagName("numberOfSeat").item(0).getFirstChild().setNodeValue(Long.toString(airship.getNumberOfSeat()));
+            }
+        }
+        return flag;
+    }
+
 }

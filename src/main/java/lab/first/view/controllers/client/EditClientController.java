@@ -93,9 +93,9 @@ public class EditClientController {
         editClient.setFirstName(firstNameTextField.getText());
         editClient.setMiddleName(middleNameField.getText());
         editClient.setLastName(lastNameTextField.getText());
-        for (int i = 0; i < ClientListController.tableClients.size(); i++) {
-            if (ClientListController.tableClients.get(i).getId() == editClient.getId()) {
-                ClientListController.tableClients.set(i, editClient);
+        for (int i = 0; i < ClientListController.dao.getList().size(); i++) {
+            if (ClientListController.dao.getList().get(i).getId() == editClient.getId()) {
+                ClientListController.dao.add(editClient);
             }
             break;
         }

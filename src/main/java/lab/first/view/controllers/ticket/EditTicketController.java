@@ -14,6 +14,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import lab.first.dao.AirshipDAOImpl;
+import lab.first.dao.RouteDAOImpl;
 import lab.first.model.Airship;
 import lab.first.model.Route;
 import lab.first.model.Ticket;
@@ -97,9 +99,9 @@ public class EditTicketController {
         }
         editTicket.setRoute(editTicket.getRoute());
         editTicket.setAirship(editTicket.getAirship());
-        for (int i = 0; i < TicketListController.tableTickets.size(); i++) {
-            if (TicketListController.tableTickets.get(i).getId() == editTicket.getId()) {
-                TicketListController.tableTickets.set(i, editTicket);
+        for (int i = 0; i < TicketListController.dao.getList().size(); i++) {
+            if (TicketListController.dao.getList().get(i).getId() == editTicket.getId()) {
+                TicketListController.dao.add(editTicket);
             }
             break;
         }
@@ -107,8 +109,10 @@ public class EditTicketController {
 
     @FXML
     void initialize() {
-        routeChoiceBox.setItems(RouteListController.tableRoutes);
-        airshipChoiceBox.setItems(FXCollections.observableArrayList(Airship.airships));
+        RouteDAOImpl routeDAO = new RouteDAOImpl();
+        AirshipDAOImpl airshipDAO = new AirshipDAOImpl();
+        routeChoiceBox.setItems(FXCollections.observableArrayList(routeDAO.getList()));
+        airshipChoiceBox.setItems(FXCollections.observableArrayList(airshipDAO.getList()));
         routeChoiceBox.setValue(editTicket.getRoute());
         airshipChoiceBox.setValue(editTicket.getAirship());
     }

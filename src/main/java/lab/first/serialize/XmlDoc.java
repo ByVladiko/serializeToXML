@@ -1,5 +1,6 @@
 package lab.first.serialize;
 
+import lab.first.model.Airship;
 import org.w3c.dom.Document;
 
 import javax.xml.transform.*;
@@ -27,6 +28,8 @@ public abstract class XmlDoc<T> {
             e.printStackTrace(System.out);
         }
     }
+
+    abstract boolean checkAndUpdate(Document doc, T obj);
 
     abstract Document addNewNode(Document document, T obj);
 }

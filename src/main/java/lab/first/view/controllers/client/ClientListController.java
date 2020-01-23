@@ -21,19 +21,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
+import lab.first.dao.ClientDAOImpl;
 import lab.first.model.Client;
+import lab.first.view.ConverterToFX;
 
 public class ClientListController implements Initializable {
 
-    public static ObservableList<Client> tableClients  = FXCollections.observableArrayList();
+    private ConverterToFX converter = new ConverterToFX();
 
-    public ObservableList<Client> getTableClients() {
-        return tableClients;
-    }
+    private ObservableList<Client> tableClients  = FXCollections.observableArrayList();
 
-    public void setTableRoutes(ObservableList<Client> tableClients) {
-        this.tableClients = tableClients;
-    }
+    protected static ClientDAOImpl dao = new ClientDAOImpl();
 
     @FXML
     private ResourceBundle resources;
@@ -141,12 +139,14 @@ public class ClientListController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         tableClientColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableClientColumnFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tableClientsColumnMiddleName.setCellValueFactory(new PropertyValueFactory<>("middleName"));
         tableClientsColumnLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
         tableViewClients.setItems(tableClients);
+
     }
 
     private void refreshTable() {

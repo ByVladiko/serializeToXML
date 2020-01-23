@@ -13,8 +13,6 @@ public class Airship {
     private String model;
     private long numberOfSeat;
 
-    public static ArrayList<Airship> airships = new ArrayList<>();
-
     public Airship(String model, long numberOfSeat) {
         this.model = model;
         this.numberOfSeat = numberOfSeat;

@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
+import lab.first.dao.TicketDAOImpl;
 import lab.first.model.Ticket;
 import lab.first.view.ConverterToFX;
 
@@ -26,15 +27,9 @@ public class TicketListController {
 
     private ConverterToFX converter = new ConverterToFX();
 
-    public static ObservableList<Ticket> tableTickets  = FXCollections.observableArrayList();
+    private ObservableList<Ticket> tableTickets  = FXCollections.observableArrayList();
 
-    public ObservableList<Ticket> getTableRoutes() {
-        return tableTickets;
-    }
-
-    public void setTableRoutes(ObservableList<Ticket> tableTickets) {
-        this.tableTickets = tableTickets;
-    }
+    protected static TicketDAOImpl dao = new TicketDAOImpl();
 
     @FXML
     private ResourceBundle resources;
@@ -152,6 +147,7 @@ public class TicketListController {
 
     @FXML
     void initialize() {
+
         tableTicketColumnId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId().toString()));
         tableTicketColumnAirship.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAirship().getModel()));
         tableTicketColumnRouteFrom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRoute().getStartPoint()));

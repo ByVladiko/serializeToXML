@@ -20,11 +20,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
+import lab.first.dao.RouteDAOImpl;
 import lab.first.model.Route;
+import lab.first.view.ConverterToFX;
 
 public class RouteListController implements Initializable {
 
-    public static ObservableList<Route> tableRoutes  = FXCollections.observableArrayList();
+    private ConverterToFX converter = new ConverterToFX();
+
+    private ObservableList<Route> tableRoutes  = FXCollections.observableArrayList();
+
+    protected static RouteDAOImpl dao = new RouteDAOImpl();;
 
     public ObservableList<Route> getTableRoutes() {
         return tableRoutes;
@@ -93,17 +99,13 @@ public class RouteListController implements Initializable {
 
     @FXML
     public void deleteRouteButtonAction(ActionEvent event) {
-        UUID id = null;
+        Route route = null;
         if (tableViewRoutes.getSelectionModel().getSelectedItem() != null) {
-            id = (UUID) tableViewRoutes.getSelectionModel().getSelectedItem().getId(); // по id будем искать в листе редактируемый маршрут
+            route = new Route(tableViewRoutes.getSelectionModel().getSelectedItem().getId(), tableViewRoutes.getSelectionModel().getSelectedItem().getStartPoint(), tableViewRoutes.getSelectionModel().getSelectedItem().getEndPoint()); // по id будем искать в листе редактируемый маршрут
         } else {
             return;
         }
-            for (int i = 0; i < tableRoutes.size(); i++) {
-                if (tableRoutes.get(i).getId() == id) {
-                    tableRoutes.remove(i);
-                }
-            }
+            dao.remove(route);
             refreshTable();
     }
 
@@ -143,6 +145,7 @@ public class RouteListController implements Initializable {
     }
 
     private void refreshTable() {
+        tableRoutes.setAll(dao.getList());
         tableViewRoutes.setItems(tableRoutes);
     }
 

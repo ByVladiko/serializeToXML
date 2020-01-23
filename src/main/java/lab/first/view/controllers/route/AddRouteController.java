@@ -55,7 +55,7 @@ public class AddRouteController implements Initializable {
             a.showAndWait();
             return;
         }
-        RouteListController.tableRoutes.add(new Route(fromTextField.getText(), toTextField.getText()));
+        RouteListController.dao.add(new Route(fromTextField.getText(), toTextField.getText()));
         toScene("route/list_routes.fxml", "List Routes", event);
     }
 

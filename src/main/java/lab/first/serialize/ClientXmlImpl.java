@@ -82,6 +82,10 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client>{
                 writeDocument(document, file);
             }
             document = documentBuilder.parse(file);
+            if (checkAndUpdate(document, client)) {
+                writeDocument(document, file);
+                return;
+            }
             writeDocument(addNewNode(document, client), file);
         } catch (SAXException e) {
             e.printStackTrace();
@@ -109,6 +113,23 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client>{
             }
         }
         writeDocument(document, file);
+    }
+
+    @Override
+    boolean checkAndUpdate(Document doc, Client client) {
+        Boolean flag = false;
+        NodeList clientsList = doc.getElementsByTagName("client");
+        Element element = null;
+        for (int i = 0; i < clientsList.getLength(); i++) {
+            element = (Element) clientsList.item(i);
+            if (element.getAttribute("id").equals(client.getId().toString())) {
+                flag = true;
+                element.getParentNode().removeChild(element);
+                addNewNode(doc, client);
+                writeDocument(doc, file);
+            }
+        }
+        return flag;
     }
 
     @Override

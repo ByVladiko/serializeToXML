@@ -79,6 +79,10 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
                 writeDocument(document, file);
             }
             document = documentBuilder.parse(file);
+            if (checkAndUpdate(document, ticket)) {
+                writeDocument(document, file);
+                return;
+            }
             writeDocument(addNewNode(document, ticket), file);
         } catch (SAXException e) {
             e.printStackTrace();
@@ -106,6 +110,23 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
             }
         }
         writeDocument(document, file);
+    }
+
+    @Override
+    boolean checkAndUpdate(Document doc, Ticket ticket) {
+        Boolean flag = false;
+        NodeList ticketsList = doc.getElementsByTagName("ticket");
+        Element element = null;
+        for (int i = 0; i < ticketsList.getLength(); i++) {
+            element = (Element) ticketsList.item(i);
+            if (element.getAttribute("id").equals(ticket.getId().toString())) {
+                flag = true;
+                element.getParentNode().removeChild(element);
+                addNewNode(doc, ticket);
+                writeDocument(doc, file);
+            }
+        }
+        return flag;
     }
 
     @Override

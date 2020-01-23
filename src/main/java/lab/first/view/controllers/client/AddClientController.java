@@ -56,7 +56,7 @@ public class AddClientController {
             a.showAndWait();
             return;
         }
-        ClientListController.tableClients.add(new Client(firstNameTextField.getText(), middleNameField.getText(), lastNameTextField.getText()));
+        ClientListController.dao.add(new Client(firstNameTextField.getText(), middleNameField.getText(), lastNameTextField.getText()));
         toScene("client/list_clients.fxml", "List Clients", event);
     }
 

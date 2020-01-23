@@ -14,6 +14,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import lab.first.dao.AirshipDAOImpl;
+import lab.first.dao.RouteDAOImpl;
 import lab.first.model.Airship;
 import lab.first.model.Route;
 import lab.first.model.Ticket;
@@ -85,14 +87,16 @@ public class AddTicketController {
             a.showAndWait();
             return;
         }
-        TicketListController.tableTickets.add(new Ticket(airshipChoiceBox.getValue(), routeChoiceBox.getValue()));
+        TicketListController.dao.add(new Ticket(airshipChoiceBox.getValue(), routeChoiceBox.getValue()));
         toScene("ticket/list_tickets.fxml", "List Tickets", event);
     }
 
     @FXML
     void initialize() {
-        routeChoiceBox.setItems(RouteListController.tableRoutes);
-        airshipChoiceBox.setItems(FXCollections.observableArrayList(Airship.airships));
+        RouteDAOImpl routeDAO = new RouteDAOImpl();
+        AirshipDAOImpl airshipDAO = new AirshipDAOImpl();
+        routeChoiceBox.setItems(FXCollections.observableArrayList(routeDAO.getList()));
+        airshipChoiceBox.setItems(FXCollections.observableArrayList(airshipDAO.getList()));
     }
 }
 
