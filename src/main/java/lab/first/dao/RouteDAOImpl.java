@@ -9,24 +9,24 @@ public class RouteDAOImpl implements DAO<Route> {
 
     private RouteXmlImpl xml = new RouteXmlImpl();
 
+    private static RouteDAOImpl routeDAO;
+
+    public static RouteDAOImpl getInstance() {
+        if (routeDAO == null) {
+            routeDAO = new RouteDAOImpl();
+            return routeDAO;
+        }
+        return routeDAO;
+    }
+
     @Override
     public void add(Route route) {
         xml.save(route);
     }
 
     @Override
-    public void update(Route route) {
-
-    }
-
-    @Override
     public void remove(Route route) {
         xml.delete(route);
-    }
-
-    @Override
-    public Route getById(String id) {
-        return null;
     }
 
     @Override

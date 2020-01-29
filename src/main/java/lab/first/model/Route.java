@@ -7,8 +7,8 @@ import java.util.UUID;
 @XmlRootElement(name = "route")
 public class Route {
     private UUID id;
-    private String startPoint; //pointOfDeparture
-    private String endPoint;   //pointOfArrival
+    private String startPoint;
+    private String endPoint;
 
 
     public Route(String startPoint, String endPoint){

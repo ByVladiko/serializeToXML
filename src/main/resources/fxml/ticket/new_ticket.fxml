@@ -63,7 +63,7 @@
                      <children>
                         <ComboBox fx:id="routeChoiceBox" prefHeight="44.0" prefWidth="400.0" promptText="Route" VBox.vgrow="SOMETIMES" />
                         <ComboBox fx:id="airshipChoiceBox" prefHeight="44.0" prefWidth="400.0" promptText="Airship" VBox.vgrow="SOMETIMES" />
-                        <Button fx:id="saveTicketButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#saveRouteButtonAction" prefWidth="290.0" style="-fx-background-color: #0271BB;" text="Save" textFill="WHITE" VBox.vgrow="ALWAYS">
+                        <Button fx:id="saveTicketButton" alignment="BASELINE_CENTER" contentDisplay="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#saveTicketButtonAction" prefWidth="290.0" style="-fx-background-color: #0271BB;" text="Save" textFill="WHITE" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>

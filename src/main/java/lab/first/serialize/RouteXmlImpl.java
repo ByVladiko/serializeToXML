@@ -28,7 +28,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
     @Override
     public List<Route> read() {
         Document document = null;
-        List<Route>  list = new ArrayList<>();
+        List<Route> list = new ArrayList<>();
         if(!file.exists()) {
             return list;
         }
@@ -39,13 +39,22 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Element element = (Element) document.getElementsByTagName("routes").item(0);
-        NodeList routes = element.getElementsByTagName("route");
+
+        NodeList routes;
+        try {
+            routes = ((Element) document.getElementsByTagName("routes").item(0)).getElementsByTagName("route");
+        } catch (NullPointerException e) {
+            return list;
+        }
+
         for (int i = 0; i < routes.getLength(); i++) {
+
             Element elementRoute = (Element) routes.item(i);
+
             UUID id = UUID.fromString(elementRoute.getAttributes().getNamedItem("id").getNodeValue());
             String startPoint = elementRoute.getElementsByTagName("startPoint").item(0).getFirstChild().getTextContent();
             String endPoint = elementRoute.getElementsByTagName("endPoint").item(0).getFirstChild().getTextContent();
+
             list.add(new Route(id, startPoint, endPoint));
         }
         return list;
@@ -54,7 +63,6 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
     @Override
     public void save(Route route) {
 
-        // Создается построитель документа
         try {
             Document document;
             if (!file.exists()) {

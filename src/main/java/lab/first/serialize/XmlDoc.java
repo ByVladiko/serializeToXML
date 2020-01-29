@@ -1,6 +1,5 @@
 package lab.first.serialize;
 
-import lab.first.model.Airship;
 import org.w3c.dom.Document;
 
 import javax.xml.transform.*;

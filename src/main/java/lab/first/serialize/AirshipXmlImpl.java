@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>{
+public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
 
     private File file;
     private DocumentBuilder documentBuilder;
@@ -33,6 +33,10 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>{
     @Override
     public List<Airship> read() {
         Document document = null;
+        List<Airship> list = new ArrayList<>();
+        if (!file.exists()) {
+            return list;
+        }
         try {
             document = documentBuilder.parse("Serialize.xml");
         } catch (SAXException e) {
@@ -40,9 +44,14 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Airship> list = new ArrayList<>();
-        Element element = (Element) document.getElementsByTagName("airships").item(0);
-        NodeList airships = element.getElementsByTagName("airship");
+
+        NodeList airships;
+        try {
+            airships = ((Element) document.getElementsByTagName("airships").item(0)).getElementsByTagName("airship");
+        } catch (NullPointerException e) {
+            return list;
+        }
+
         for (int i = 0; i < airships.getLength(); i++) {
             Element elementAirship = (Element) airships.item(i);
             UUID id = UUID.fromString(elementAirship.getAttributes().getNamedItem("id").getNodeValue());
@@ -56,7 +65,6 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>{
     @Override
     public void save(Airship airship) {
 
-        // Создается построитель документа
         try {
             Document document;
             if (!file.exists()) {
@@ -93,7 +101,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>{
         Element element = (Element) document.getElementsByTagName("airships").item(0);
         NodeList airships = element.getElementsByTagName("airship");
         for (int i = 0; i < airships.getLength(); i++) {
-            if(airships.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(airship.getId().toString())) {
+            if (airships.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(airship.getId().toString())) {
                 airships.item(i).getParentNode().removeChild(airships.item(i));
             }
         }
@@ -148,6 +156,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>{
                 flag = true;
                 element.getElementsByTagName("model").item(0).getFirstChild().setNodeValue(airship.getModel());
                 element.getElementsByTagName("numberOfSeat").item(0).getFirstChild().setNodeValue(Long.toString(airship.getNumberOfSeat()));
+                break;
             }
         }
         return flag;

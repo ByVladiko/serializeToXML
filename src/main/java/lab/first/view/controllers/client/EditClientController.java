@@ -1,32 +1,18 @@
 package lab.first.view.controllers.client;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import lab.first.model.Client;
+import lab.first.view.controllers.MainControl;
 
-public class EditClientController {
+import static lab.first.view.controllers.Util.toScene;
 
-    private Client editClient;
+public class EditClientController extends MainControl {
 
-    public void setEditClient(Client editClient) {
-        this.editClient = editClient;
-    }
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+    static Client editClient;
 
     @FXML
     private Button mainRoutesButton;
@@ -50,34 +36,6 @@ public class EditClientController {
     private Button saveClientButton;
 
     @FXML
-    private void mainRoutesButtonAction(ActionEvent event) throws Exception {
-        toScene("route/list_routes.fxml", "List Routes", event);
-    }
-
-    @FXML
-    private void mainClientsButtonAction(ActionEvent event) throws Exception {
-        toScene("client/list_clients.fxml", "List Clients", event);
-    }
-
-    @FXML
-    private void mainTicketsButtonAction(ActionEvent event) throws Exception {
-        toScene("ticket/list_tickets.fxml", "List Tickets", event);
-    }
-
-    private void toScene(String path, String title, ActionEvent event) throws Exception {
-
-        double width = ((Node) event.getSource()).getScene().getWidth();
-        double height = ((Node) event.getSource()).getScene().getHeight();
-
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../../fxml/" + path));
-        Scene scene = new Scene(root, width, height);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
     void saveClientButtonAction(ActionEvent event) throws Exception {
         String regex = "^[a-zA-Z0-9А-Яа-я._-]{3,}$";
         if(!firstNameTextField.getText().matches(regex) || !middleNameField.getText().matches(regex)) {
@@ -93,23 +51,14 @@ public class EditClientController {
         editClient.setFirstName(firstNameTextField.getText());
         editClient.setMiddleName(middleNameField.getText());
         editClient.setLastName(lastNameTextField.getText());
-        for (int i = 0; i < ClientListController.dao.getList().size(); i++) {
-            if (ClientListController.dao.getList().get(i).getId() == editClient.getId()) {
-                ClientListController.dao.add(editClient);
-            }
-            break;
-        }
-        toScene("client/list_clients.fxml", "List Clients", event);
+        ClientListController.dao.add(editClient);
+        toScene("client/list_clients.fxml", "List Clients");
     }
 
     @FXML
     void initialize() {
-
-    }
-
-    public void writeInFields(Client client) {
-        firstNameTextField.setText(client.getFirstName());
-        middleNameField.setText(client.getMiddleName());
-        lastNameTextField.setText(client.getLastName());
+        firstNameTextField.setText(editClient.getFirstName());
+        middleNameField.setText(editClient.getMiddleName());
+        lastNameTextField.setText(editClient.getLastName());
     }
 }

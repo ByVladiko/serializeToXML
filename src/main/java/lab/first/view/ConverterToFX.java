@@ -1,5 +1,6 @@
 package lab.first.view;
 
+import lab.first.view.controllers.Util;
 import lab.first.view.model.AirshipFX;
 import lab.first.view.model.ClientFX;
 import lab.first.view.model.RouteFX;
@@ -52,6 +53,5 @@ public class ConverterToFX {
     public Ticket convertFxToModel(TicketFX ticketFx) {
 
         return new Ticket(ticketFx.getId(), convertFxToModel(ticketFx.getAirship()), convertFxToModel(ticketFx.getRoute()));
-
     }
 }

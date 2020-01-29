@@ -2,40 +2,36 @@ package lab.first.view.controllers.ticket;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
-import javafx.stage.Stage;
 import lab.first.dao.TicketDAOImpl;
+import lab.first.model.Client;
 import lab.first.model.Ticket;
-import lab.first.view.ConverterToFX;
+import lab.first.view.controllers.MainControl;
 
-public class TicketListController {
+import static lab.first.view.controllers.Util.toScene;
 
-    private ConverterToFX converter = new ConverterToFX();
+public class TicketListController extends MainControl implements Initializable {
 
-    private ObservableList<Ticket> tableTickets  = FXCollections.observableArrayList();
+    protected ObservableList<Ticket> tableTickets = FXCollections.observableArrayList();
 
-    protected static TicketDAOImpl dao = new TicketDAOImpl();
+    private Client client;
 
-    @FXML
-    private ResourceBundle resources;
+    static TicketDAOImpl dao = new TicketDAOImpl();
 
-    @FXML
-    private URL location;
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     @FXML
     private Button mainRoutesButton;
@@ -84,22 +80,15 @@ public class TicketListController {
 
     @FXML
     void addTicketButtonAction(ActionEvent event) throws Exception {
-        toScene("ticket/new_ticket.fxml", "New Ticket", event);
+        toScene("ticket/new_ticket.fxml", "New Ticket");
     }
 
     @FXML
     void deleteTicketButtonAction(ActionEvent event) {
-        UUID id = null;
-        if (tableViewTickets.getSelectionModel().getSelectedItem() != null) {
-            id = (UUID) tableViewTickets.getSelectionModel().getSelectedItem().getId();
-        } else {
+        if (tableViewTickets.getSelectionModel().getSelectedItem() == null) {
             return;
         }
-        for (int i = 0; i < tableTickets.size(); i++) {
-            if (tableTickets.get(i).getId() == id) {
-                tableTickets.remove(i);
-            }
-        }
+        dao.remove(tableViewTickets.getSelectionModel().getSelectedItem());
         refreshTable();
     }
 
@@ -113,40 +102,18 @@ public class TicketListController {
 
     }
 
-    @FXML
-    private void mainRoutesButtonAction(ActionEvent event) throws Exception {
-        toScene("route/list_routes.fxml", "List Routes", event);
-    }
-
-    @FXML
-    private void mainClientsButtonAction(ActionEvent event) throws Exception {
-        toScene("client/list_clients.fxml", "List Clients", event);
-    }
-
-    @FXML
-    private void mainTicketsButtonAction(ActionEvent event) throws Exception {
-        toScene("ticket/list_tickets.fxml", "List Tickets", event);
-    }
-
-    private void toScene(String path, String title, ActionEvent event) throws Exception {
-
-        double width = ((Node) event.getSource()).getScene().getWidth();
-        double height = ((Node) event.getSource()).getScene().getHeight();
-
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../../fxml/" + path));
-        Scene scene = new Scene(root, width, height);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     private void refreshTable() {
-        tableViewTickets.setItems(tableTickets);
+        if (client.getId() == null) {
+            tableTickets.setAll(dao.getList());
+            tableViewTickets.setItems(tableTickets);
+        } else {
+            tableTickets.setAll(dao.getListByClient(client));
+            tableViewTickets.setItems(tableTickets);
+        }
     }
 
     @FXML
-    void initialize() {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
         tableTicketColumnId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId().toString()));
         tableTicketColumnAirship.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAirship().getModel()));

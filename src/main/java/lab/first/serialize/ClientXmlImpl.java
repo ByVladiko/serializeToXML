@@ -1,23 +1,24 @@
 package lab.first.serialize;
 
+import lab.first.model.Airship;
 import lab.first.model.Client;
+import lab.first.model.Route;
+import lab.first.model.Ticket;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client>{
+public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
 
     private File file;
     private DocumentBuilder documentBuilder;
@@ -33,46 +34,94 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client>{
 
     @Override
     public List<Client> read() {
-        String xmlText = null;
-        List<Client> list = null;
-        try(BufferedReader br = new BufferedReader(new FileReader(file)))
-        {
-            String s;
-            while((s=br.readLine())!=null) {
-                xmlText = "";
-                if(s.indexOf("<ticket id=")!=-1) {
-                    xmlText += s;
-                    while(s.indexOf("</ticket>")==-1) {
-                        s = br.readLine();
-                        xmlText += s;
-                    }
-                    if(!xmlText.isEmpty()) {
-                        try {
-                            JAXBContext context = JAXBContext.newInstance(Client.class);
-                            Unmarshaller unmarshaller = context.createUnmarshaller();
-                            xmlText.trim();
-                            list = new ArrayList<>();
-                            list.add((Client) unmarshaller.unmarshal(new StringReader(xmlText)));
-                        } catch (JAXBException e) {
-                            e.printStackTrace();
-                        }
-                    }
+        List<Client> list = new ArrayList<>();
+        Document document = null;
+        if (!file.exists()) {
+            return list;
+        }
+        try {
+            document = documentBuilder.parse(file);
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        NodeList clientsList;
+        try {
+            clientsList = ((Element) document.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
+        } catch (NullPointerException e) {
+            return list;
+        }
+
+        for (int i = 0; i < clientsList.getLength(); i++) {
+
+            Client client = new Client();
+
+            Element element = (Element) clientsList.item(i);
+
+            client.setId(UUID.fromString(element.getAttribute("id")));
+            client.setFirstName(element.getElementsByTagName("firstName").item(0).getFirstChild().getNodeValue());
+            client.setMiddleName(element.getElementsByTagName("middleName").item(0).getFirstChild().getNodeValue());
+            client.setLastName(element.getElementsByTagName("lastName").item(0).getFirstChild().getNodeValue());
+
+            NodeList ticketsList = ((Element) element.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
+
+            List<Ticket> tickets = new ArrayList<>();
+
+            for (int j = 0; j < ticketsList.getLength(); j++) {
+
+                Ticket ticket = new Ticket();
+
+                String ticketId = ((Element) ticketsList.item(j)).getAttribute("id");
+                NodeList repoTicketsList = ((Element) document.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
+
+                for (int k = 0; k < repoTicketsList.getLength(); k++) {
+
+                    Airship airship = new Airship();
+
+                    Element foundedTicket = findElement(document, "ticket", ticketId);
+                    String idAirship = ((Element) foundedTicket.getElementsByTagName("airship").item(0)).getAttribute("id");
+                    Element airshipOfTicket = findElement(document, "airship", idAirship);
+
+                    airship.setId(UUID.fromString(airshipOfTicket.getAttribute("id")));
+                    airship.setModel(airshipOfTicket.getElementsByTagName("model").item(0).getFirstChild().getNodeValue());
+                    airship.setNumberOfSeat(Long.valueOf(airshipOfTicket.getElementsByTagName("numberOfSeat").item(0).getFirstChild().getNodeValue()));
+
+                    Route route = new Route();
+                    String idRoute = ((Element) foundedTicket.getElementsByTagName("route").item(0)).getAttribute("id");
+                    Element routeOfTicket = findElement(document, "route", idRoute);
+
+                    route.setId(UUID.fromString(routeOfTicket.getAttribute("id")));
+                    route.setStartPoint(routeOfTicket.getElementsByTagName("startPoint").item(0).getFirstChild().getNodeValue());
+                    route.setEndPoint(routeOfTicket.getElementsByTagName("endPoint").item(0).getFirstChild().getNodeValue());
+
+                    ticket.setId(UUID.fromString(ticketId));
+                    ticket.setAirship(airship);
+                    ticket.setRoute(route);
+
                 }
+                tickets.add(ticket);
             }
-        }
-        catch(IOException ex){
-            System.out.println(ex.getMessage());
-        }
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).toString());
+            client.setTickets(tickets);
+            list.add(client);
         }
         return list;
+    }
+
+    private Element findElement(Document document, String elem, String id) {
+        NodeList list = ((Element) document.getElementsByTagName(elem + "s").item(0)).getElementsByTagName(elem);
+        for (int i = 0; i < list.getLength(); i++) {
+            if (((Element) list.item(i)).getAttribute("id").equals(id)) {
+                return (Element) list.item(i);
+            }
+        }
+        return null;
     }
 
     @Override
     public void save(Client client) {
 
-        // Создается построитель документа
         try {
             Document document;
             if (!file.exists()) {
@@ -108,7 +157,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client>{
         Element element = (Element) document.getElementsByTagName("clients").item(0);
         NodeList clients = element.getElementsByTagName("client");
         for (int i = 0; i < clients.getLength(); i++) {
-            if(clients.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(client.getId().toString())) {
+            if (clients.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(client.getId().toString())) {
                 clients.item(i).getParentNode().removeChild(clients.item(i));
             }
         }
@@ -119,7 +168,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client>{
     boolean checkAndUpdate(Document doc, Client client) {
         Boolean flag = false;
         NodeList clientsList = doc.getElementsByTagName("client");
-        Element element = null;
+        Element element;
         for (int i = 0; i < clientsList.getLength(); i++) {
             element = (Element) clientsList.item(i);
             if (element.getAttribute("id").equals(client.getId().toString())) {
@@ -158,37 +207,6 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client>{
         for (int i = 0; i < client.getTickets().size(); i++) {
             Element ticketElement = document.createElement("ticket");
             ticketElement.setAttribute("id", client.getTickets().get(i).getId().toString());
-
-
-            // airship элемент и id в виде атрибута
-            Element airship = document.createElement("airship");
-
-            // Устанавливаем значения текста внутри тегов
-            airship.setAttribute("id", client.getTickets().get(i).getAirship().getId().toString());
-
-            Element airshipModel = document.createElement("model");
-            airshipModel.setTextContent(client.getTickets().get(i).getAirship().getModel());
-
-            Element airshipNumOfSeat = document.createElement("numberOfSeat");
-            airshipNumOfSeat.setTextContent(String.valueOf(client.getTickets().get(i).getAirship().getNumberOfSeat()));
-
-            Element route = document.createElement("route");
-
-            route.setAttribute("id", client.getTickets().get(i).getRoute().getId().toString());
-
-            Element routeStart = document.createElement("startPoint");
-            routeStart.setTextContent(client.getTickets().get(i).getRoute().getStartPoint());
-
-            Element routeFinish = document.createElement("endPoint");
-            routeFinish.setTextContent(client.getTickets().get(i).getRoute().getEndPoint());
-
-            ticketElement.appendChild(airship);
-            airship.appendChild(airshipModel);
-            airship.appendChild(airshipNumOfSeat);
-
-            ticketElement.appendChild(route);
-            route.appendChild(routeStart);
-            route.appendChild(routeFinish);
 
             tickets.appendChild(ticketElement);
         }

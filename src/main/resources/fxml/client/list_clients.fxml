@@ -124,7 +124,7 @@
                   </HBox>
                </bottom>
                <center>
-                  <TableView fx:id="tableViewClients" focusTraversable="false" prefHeight="319.0" prefWidth="932.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="tableViewClients" focusTraversable="false" onMouseClicked="#showTicketsMouseClicked" prefHeight="319.0" prefWidth="932.0" BorderPane.alignment="CENTER">
                      <columns>
                         <TableColumn fx:id="tableClientColumnId" minWidth="-1.0" prefWidth="-1.0" text="ID" />
                         <TableColumn fx:id="tableClientColumnFirstName" minWidth="-1.0" prefWidth="-1.0" text="First name" />

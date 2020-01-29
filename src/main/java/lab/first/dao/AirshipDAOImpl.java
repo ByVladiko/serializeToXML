@@ -9,24 +9,24 @@ public class AirshipDAOImpl implements DAO<Airship> {
 
     private AirshipXmlImpl xml = new AirshipXmlImpl();
 
+    private static AirshipDAOImpl airshipDAO;
+
+    public static AirshipDAOImpl getInstance() {
+        if (airshipDAO == null) {
+            airshipDAO = new AirshipDAOImpl();
+            return airshipDAO;
+        }
+        return airshipDAO;
+    }
+
     @Override
     public void add(Airship airship) {
         xml.save(airship);
     }
 
     @Override
-    public void update(Airship airship) {
-
-    }
-
-    @Override
     public void remove(Airship airship) {
         xml.delete(airship);
-    }
-
-    @Override
-    public Airship getById(String id) {
-        return null;
     }
 
     @Override

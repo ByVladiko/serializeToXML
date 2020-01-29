@@ -5,24 +5,16 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import lab.first.model.Route;
+import lab.first.view.controllers.MainControl;
 
-public class AddRouteController implements Initializable {
+import static lab.first.view.controllers.Util.toScene;
 
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+public class AddRouteController extends MainControl implements Initializable {
 
     @FXML
     private TextField fromTextField;
@@ -56,35 +48,7 @@ public class AddRouteController implements Initializable {
             return;
         }
         RouteListController.dao.add(new Route(fromTextField.getText(), toTextField.getText()));
-        toScene("route/list_routes.fxml", "List Routes", event);
-    }
-
-    @FXML
-    private void mainRoutesButtonAction(ActionEvent event) throws Exception {
-        toScene("route/list_routes.fxml", "List Routes", event);
-    }
-
-    @FXML
-    private void mainClientsButtonAction(ActionEvent event) throws Exception {
-        toScene("client/list_clients.fxml", "List Clients", event);
-    }
-
-    @FXML
-    private void mainTicketsButtonAction(ActionEvent event) throws Exception {
-        toScene("ticket/list_tickets.fxml", "List Tickets", event);
-    }
-
-    private void toScene(String path, String title, ActionEvent event) throws Exception {
-
-        double width = ((Node) event.getSource()).getScene().getWidth();
-        double height = ((Node) event.getSource()).getScene().getHeight();
-
-        Parent root = FXMLLoader.load(getClass().getResource("../../../../../fxml/" + path));
-        Scene scene = new Scene(root, width, height);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.show();
+        toScene("route/list_routes.fxml", "List Routes");
     }
 
     @Override

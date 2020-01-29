@@ -1,5 +1,6 @@
 package lab.first.dao;
 
+import lab.first.model.Client;
 import lab.first.model.Ticket;
 import lab.first.serialize.TicketXmlImpl;
 
@@ -9,14 +10,19 @@ public class TicketDAOImpl implements DAO<Ticket> {
 
     private TicketXmlImpl xml = new TicketXmlImpl();
 
-    @Override
-    public void add(Ticket ticket) {
-        xml.save(ticket);
+    private static TicketDAOImpl ticketDAO;
+
+    public static TicketDAOImpl getInstance() {
+        if (ticketDAO == null) {
+            ticketDAO = new TicketDAOImpl();
+            return ticketDAO;
+        }
+        return ticketDAO;
     }
 
     @Override
-    public void update(Ticket ticket) {
-
+    public void add(Ticket ticket) {
+        xml.save(ticket);
     }
 
     @Override
@@ -25,12 +31,11 @@ public class TicketDAOImpl implements DAO<Ticket> {
     }
 
     @Override
-    public Ticket getById(String id) {
-        return null;
-    }
-
-    @Override
     public List<Ticket> getList() {
         return xml.read();
+    }
+
+    public List<Ticket> getListByClient(Client client) {
+        return xml.getTicketsByClient(client);
     }
 }

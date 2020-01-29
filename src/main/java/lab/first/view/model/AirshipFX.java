@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lab.first.model.Airship;
+
 import java.util.UUID;
 
 public class AirshipFX {
