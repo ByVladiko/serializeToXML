@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -16,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import lab.first.dao.ClientDAOImpl;
 import lab.first.model.Client;
 import lab.first.view.controllers.MainControl;
@@ -110,10 +108,8 @@ public class ClientListController extends MainControl implements Initializable {
 
     @FXML
     void showTicketsMouseClicked(MouseEvent event) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        Pane p = fxmlLoader.load(getClass().getResource("../../../../../fxml/ticket/list_tickets.fxml").openStream());
-        TicketListController fooController = (TicketListController) fxmlLoader.getController();
-        fooController.setClient(tableViewClients.getSelectionModel().getSelectedItem());
+        TicketListController ticketListController = new TicketListController();
+        ticketListController.setClient(tableViewClients.getSelectionModel().getSelectedItem());
         toScene("ticket/list_tickets.fxml", "List Tickets of client");
     }
 
