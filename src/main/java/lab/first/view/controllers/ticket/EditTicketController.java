@@ -17,8 +17,6 @@ import lab.first.model.Route;
 import lab.first.model.Ticket;
 import lab.first.view.controllers.MainControl;
 
-import static lab.first.view.controllers.Util.toScene;
-
 public class EditTicketController extends MainControl implements Initializable {
 
     Ticket editTicket;
@@ -60,7 +58,7 @@ public class EditTicketController extends MainControl implements Initializable {
         editTicket.setRoute(editTicket.getRoute());
         editTicket.setAirship(editTicket.getAirship());
         TicketListController.dao.add(editTicket);
-        toScene("route/list_tickets.fxml", "List Tickets");
+        toScene("route/list_tickets.fxml", "List Tickets", event);
     }
 
     @FXML

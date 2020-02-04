@@ -12,8 +12,6 @@ import javafx.scene.control.TextField;
 import lab.first.model.Route;
 import lab.first.view.controllers.MainControl;
 
-import static lab.first.view.controllers.Util.toScene;
-
 public class EditRouteController extends MainControl implements Initializable {
 
     static Route editRoute;
@@ -52,7 +50,7 @@ public class EditRouteController extends MainControl implements Initializable {
         editRoute.setStartPoint(fromTextField.getText());
         editRoute.setEndPoint(toTextField.getText());
         RouteListController.dao.add(editRoute);
-        toScene("route/list_routes.fxml", "List Routes");
+        toScene("route/list_routes.fxml", "List Routes", event);
     }
 
     @Override

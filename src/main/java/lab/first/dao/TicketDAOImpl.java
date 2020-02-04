@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TicketDAOImpl implements DAO<Ticket> {
 
-    private TicketXmlImpl xml = new TicketXmlImpl();
+    private TicketXmlImpl xml = new TicketXmlImpl();;
 
     private static TicketDAOImpl ticketDAO;
 
@@ -23,6 +23,10 @@ public class TicketDAOImpl implements DAO<Ticket> {
     @Override
     public void add(Ticket ticket) {
         xml.save(ticket);
+    }
+
+    public void addToClient(Ticket ticket, Client client) {
+
     }
 
     @Override

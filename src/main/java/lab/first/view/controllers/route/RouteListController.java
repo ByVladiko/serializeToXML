@@ -18,8 +18,6 @@ import lab.first.dao.RouteDAOImpl;
 import lab.first.model.Route;
 import lab.first.view.controllers.MainControl;
 
-import static lab.first.view.controllers.Util.toScene;
-
 public class RouteListController extends MainControl implements Initializable {
 
     private ObservableList<Route> tableRoutes  = FXCollections.observableArrayList();
@@ -67,7 +65,7 @@ public class RouteListController extends MainControl implements Initializable {
 
     @FXML
     public void addRouteButtonAction(ActionEvent event) throws Exception {
-        toScene("route/new_route.fxml", "New Route");
+        toScene("route/new_route.fxml", "New Route", event);
     }
 
     @FXML
@@ -85,7 +83,7 @@ public class RouteListController extends MainControl implements Initializable {
             return;
         }
         EditRouteController.editRoute = tableViewRoutes.getSelectionModel().getSelectedItem();
-        toScene("route/edit_route.fxml", "List Routes");
+        toScene("route/edit_route.fxml", "List Routes", event);
     }
 
     @FXML

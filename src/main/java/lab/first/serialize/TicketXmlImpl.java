@@ -4,15 +4,11 @@ import lab.first.model.Airship;
 import lab.first.model.Client;
 import lab.first.model.Route;
 import lab.first.model.Ticket;
-import lab.first.view.controllers.Util;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -122,13 +118,16 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
 
             Element element = (Element) clientsList.item(i);
 
-            if (!client.getId().equals(element.getAttribute("id"))) {
+            if (!client.getId().toString().equals(element.getAttribute("id"))) {
                 continue;
             }
 
-            NodeList ticketsList = ((Element) element.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
-
-            List<Ticket> tickets = new ArrayList<>();
+            NodeList ticketsList;
+            try {
+                ticketsList = ((Element) element.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
+            } catch (NullPointerException e) {
+                return list;
+            }
 
             for (int j = 0; j < ticketsList.getLength(); j++) {
 
@@ -206,14 +205,22 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Element element = (Element) document.getElementsByTagName("tickets").item(0);
-        NodeList tickets = element.getElementsByTagName("route");
-        for (int i = 0; i < tickets.getLength(); i++) {
-            if (tickets.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(ticket.getId().toString())) {
-                tickets.item(i).getParentNode().removeChild(tickets.item(i));
+        NodeList clientsList = ((Element) document.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
+
+        for (int i = 0; i < clientsList.getLength(); i++) {
+
+            Element element = (Element) clientsList.item(i);
+
+            NodeList ticketsList = ((Element) element.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
+
+            for (int j = 0; j < ticketsList.getLength(); j++) {
+                if (ticket.getId().toString().equals(((Element) ticketsList.item(j)).getAttribute("id"))) {
+                    ticketsList.item(j).getParentNode().removeChild(ticketsList.item(j));
+                    break;
+                }
             }
+            writeDocument(document, file);
         }
-        writeDocument(document, file);
     }
 
     @Override

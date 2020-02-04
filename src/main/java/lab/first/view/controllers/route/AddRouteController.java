@@ -12,8 +12,6 @@ import javafx.scene.control.TextField;
 import lab.first.model.Route;
 import lab.first.view.controllers.MainControl;
 
-import static lab.first.view.controllers.Util.toScene;
-
 public class AddRouteController extends MainControl implements Initializable {
 
     @FXML
@@ -48,7 +46,7 @@ public class AddRouteController extends MainControl implements Initializable {
             return;
         }
         RouteListController.dao.add(new Route(fromTextField.getText(), toTextField.getText()));
-        toScene("route/list_routes.fxml", "List Routes");
+        toScene("route/list_routes.fxml", "List Routes", event);
     }
 
     @Override

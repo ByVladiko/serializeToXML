@@ -20,8 +20,6 @@ import lab.first.model.Client;
 import lab.first.view.controllers.MainControl;
 import lab.first.view.controllers.ticket.TicketListController;
 
-import static lab.first.view.controllers.Util.toScene;
-
 public class ClientListController extends MainControl implements Initializable {
 
     private ObservableList<Client> tableClients  = FXCollections.observableArrayList();
@@ -75,7 +73,7 @@ public class ClientListController extends MainControl implements Initializable {
 
     @FXML
     void addClientButtonAction(ActionEvent event) throws Exception {
-        toScene("client/new_client.fxml", "New Client");
+        toScene("client/new_client.fxml", "New Client", event);
     }
 
     @FXML
@@ -93,12 +91,18 @@ public class ClientListController extends MainControl implements Initializable {
             return;
         }
         EditClientController.editClient = tableViewClients.getSelectionModel().getSelectedItem();
-        toScene("route/edit_route.fxml", "List Routes");
+        toScene("route/edit_route.fxml", "List Routes", event);
     }
 
     @FXML
     void idInputTextFieldAction(InputMethodEvent event) {
-
+        TableView<Client> list = new TableView<>();
+        for (int i = 0; i < tableViewClients.getItems().size(); i++) {
+            if (tableClientColumnId.getCellObservableValue(i).getValue().contains(idTextField.getText())) {
+                list.getItems().add(tableViewClients.getItems().get(i));
+            }
+        }
+        tableViewClients.setItems(list.getItems());
     }
 
     private void refreshTable() {
@@ -108,9 +112,11 @@ public class ClientListController extends MainControl implements Initializable {
 
     @FXML
     void showTicketsMouseClicked(MouseEvent event) throws Exception {
-        TicketListController ticketListController = new TicketListController();
-        ticketListController.setClient(tableViewClients.getSelectionModel().getSelectedItem());
-        toScene("ticket/list_tickets.fxml", "List Tickets of client");
+        if (tableViewClients.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+        TicketListController.client = tableViewClients.getSelectionModel().getSelectedItem();
+        toScene("ticket/list_tickets.fxml", "List tickets of " + tableViewClients.getSelectionModel().getSelectedItem().toString(), event);
     }
 
     @Override

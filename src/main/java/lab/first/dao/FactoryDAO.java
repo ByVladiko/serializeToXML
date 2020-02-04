@@ -13,7 +13,7 @@ public class FactoryDAO {
     }
 
     public DAO getAirshipDAO() {
-        return TicketDAOImpl.getInstance();
+        return AirshipDAOImpl.getInstance();
     }
 
     public DAO getClientDAO() {

@@ -1,5 +1,9 @@
 package lab.first.view.controllers.ticket;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,26 +12,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import lab.first.dao.AirshipDAOImpl;
+import lab.first.dao.ClientDAOImpl;
 import lab.first.dao.RouteDAOImpl;
-import lab.first.dao.TicketDAOImpl;
 import lab.first.model.Airship;
 import lab.first.model.Client;
 import lab.first.model.Route;
 import lab.first.model.Ticket;
 import lab.first.view.controllers.MainControl;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import static lab.first.view.controllers.Util.toScene;
-
 public class AddTicketController extends MainControl implements Initializable {
 
-    private Client client;
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
+    static Client client;
 
     @FXML
     private Button mainRoutesButton;
@@ -59,21 +54,13 @@ public class AddTicketController extends MainControl implements Initializable {
             a.showAndWait();
             return;
         }
-        if (client != null) {
-            Ticket ticket = new Ticket(airshipChoiceBox.getValue(), routeChoiceBox.getValue());
-            factoryDAO.getTicketDAO().add(ticket);
-            client.getTickets().add(ticket);
-            client.setTickets(client.getTickets());
-            factoryDAO.getClientDAO().add(client);
-            TicketListController ticketListController = new TicketListController();
-            ticketListController.setClient(client);
-            toScene("ticket/list_tickets.fxml", "List Tickets");
-        }
-        else {
-            Ticket ticket = new Ticket(airshipChoiceBox.getValue(), routeChoiceBox.getValue());
-            factoryDAO.getTicketDAO().add(ticket);
-            toScene("ticket/list_tickets.fxml", "List Tickets");
-        }
+            Ticket newTicket = new Ticket(airshipChoiceBox.getValue(), routeChoiceBox.getValue());
+            List<Ticket> tickets = client.getTickets();
+            tickets.add(newTicket);
+            client.setTickets(tickets);
+            ClientDAOImpl.getInstance().add(client);
+            TicketListController.client = client;
+            toScene("ticket/list_tickets.fxml", "List Tickets", event);
     }
 
     @FXML

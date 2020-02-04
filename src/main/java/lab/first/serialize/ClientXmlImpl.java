@@ -65,23 +65,26 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
             client.setMiddleName(element.getElementsByTagName("middleName").item(0).getFirstChild().getNodeValue());
             client.setLastName(element.getElementsByTagName("lastName").item(0).getFirstChild().getNodeValue());
 
-            NodeList ticketsList = ((Element) element.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
-
             List<Ticket> tickets = new ArrayList<>();
+
+            NodeList ticketsList;
+            try {
+                ticketsList = ((Element) element.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
+            } catch (NullPointerException e) {
+                client.setTickets(tickets);
+                list.add(client);
+                continue;
+            }
 
             for (int j = 0; j < ticketsList.getLength(); j++) {
 
-                Ticket ticket = new Ticket();
+                    Ticket ticket = new Ticket();
 
-                String ticketId = ((Element) ticketsList.item(j)).getAttribute("id");
-                NodeList repoTicketsList = ((Element) document.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
-
-                for (int k = 0; k < repoTicketsList.getLength(); k++) {
+                    String ticketId = ((Element) ticketsList.item(j)).getAttribute("id");
 
                     Airship airship = new Airship();
 
-                    Element foundedTicket = findElement(document, "ticket", ticketId);
-                    String idAirship = ((Element) foundedTicket.getElementsByTagName("airship").item(0)).getAttribute("id");
+                    String idAirship = ((Element) ((Element) ticketsList.item(j)).getElementsByTagName("airship").item(0)).getAttribute("id");
                     Element airshipOfTicket = findElement(document, "airship", idAirship);
 
                     airship.setId(UUID.fromString(airshipOfTicket.getAttribute("id")));
@@ -89,7 +92,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
                     airship.setNumberOfSeat(Long.valueOf(airshipOfTicket.getElementsByTagName("numberOfSeat").item(0).getFirstChild().getNodeValue()));
 
                     Route route = new Route();
-                    String idRoute = ((Element) foundedTicket.getElementsByTagName("route").item(0)).getAttribute("id");
+                    String idRoute = ((Element) ((Element) ticketsList.item(j)).getElementsByTagName("route").item(0)).getAttribute("id");
                     Element routeOfTicket = findElement(document, "route", idRoute);
 
                     route.setId(UUID.fromString(routeOfTicket.getAttribute("id")));
@@ -99,9 +102,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
                     ticket.setId(UUID.fromString(ticketId));
                     ticket.setAirship(airship);
                     ticket.setRoute(route);
-
-                }
-                tickets.add(ticket);
+                    tickets.add(ticket);
             }
             client.setTickets(tickets);
             list.add(client);
@@ -176,6 +177,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
                 element.getParentNode().removeChild(element);
                 addNewNode(doc, client);
                 writeDocument(doc, file);
+                break;
             }
         }
         return flag;
@@ -207,6 +209,15 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
         for (int i = 0; i < client.getTickets().size(); i++) {
             Element ticketElement = document.createElement("ticket");
             ticketElement.setAttribute("id", client.getTickets().get(i).getId().toString());
+
+            Element airship = document.createElement("airship");
+            airship.setAttribute("id", client.getTickets().get(i).getAirship().getId().toString());
+
+            Element route = document.createElement("route");
+            route.setAttribute("id", client.getTickets().get(i).getRoute().getId().toString());
+
+            ticketElement.appendChild(airship);
+            ticketElement.appendChild(route);
 
             tickets.appendChild(ticketElement);
         }

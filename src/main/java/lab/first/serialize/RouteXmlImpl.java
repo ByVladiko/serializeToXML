@@ -99,6 +99,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
         for (int i = 0; i < routes.getLength(); i++) {
             if(routes.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(route.getId().toString())) {
                 routes.item(i).getParentNode().removeChild(routes.item(i));
+                break;
             }
         }
         writeDocument(document, file);

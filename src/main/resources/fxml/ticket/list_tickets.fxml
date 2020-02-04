@@ -96,7 +96,7 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </BorderPane.margin>
                      <children>
-                        <Button fx:id="addTicketButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addTicketButtonAction" style="-fx-background-color: #0271BB;" text="Add" textFill="WHITE" HBox.hgrow="ALWAYS">
+					 <Button fx:id="addTicketButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addTicketButtonAction" style="-fx-background-color: #0271BB;" text="Add" textFill="WHITE" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="20.0" />
                            </font>

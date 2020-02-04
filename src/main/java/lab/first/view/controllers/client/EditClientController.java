@@ -8,8 +8,6 @@ import javafx.scene.control.TextField;
 import lab.first.model.Client;
 import lab.first.view.controllers.MainControl;
 
-import static lab.first.view.controllers.Util.toScene;
-
 public class EditClientController extends MainControl {
 
     static Client editClient;
@@ -52,7 +50,7 @@ public class EditClientController extends MainControl {
         editClient.setMiddleName(middleNameField.getText());
         editClient.setLastName(lastNameTextField.getText());
         ClientListController.dao.add(editClient);
-        toScene("client/list_clients.fxml", "List Clients");
+        toScene("client/list_clients.fxml", "List Clients", event);
     }
 
     @FXML

@@ -19,19 +19,13 @@ import lab.first.model.Client;
 import lab.first.model.Ticket;
 import lab.first.view.controllers.MainControl;
 
-import static lab.first.view.controllers.Util.toScene;
-
 public class TicketListController extends MainControl implements Initializable {
 
     protected ObservableList<Ticket> tableTickets = FXCollections.observableArrayList();
 
-    private Client client;
+    public static Client client;
 
     static TicketDAOImpl dao = new TicketDAOImpl();
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     @FXML
     private Button mainRoutesButton;
@@ -80,7 +74,8 @@ public class TicketListController extends MainControl implements Initializable {
 
     @FXML
     void addTicketButtonAction(ActionEvent event) throws Exception {
-        toScene("ticket/new_ticket.fxml", "New Ticket");
+        AddTicketController.client = client;
+        toScene("ticket/new_ticket.fxml", "New Ticket", event);
     }
 
     @FXML
@@ -103,7 +98,7 @@ public class TicketListController extends MainControl implements Initializable {
     }
 
     private void refreshTable() {
-        if (client.getId() == null) {
+        if (client == null) {
             tableTickets.setAll(dao.getList());
             tableViewTickets.setItems(tableTickets);
         } else {
@@ -114,6 +109,13 @@ public class TicketListController extends MainControl implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if (client == null) {
+            addTicketButton.setVisible(false);
+            addTicketButton.managedProperty().bind(addTicketButton.visibleProperty());
+        } else {
+            addTicketButton.setVisible(true);
+        }
 
         tableTicketColumnId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId().toString()));
         tableTicketColumnAirship.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAirship().getModel()));
