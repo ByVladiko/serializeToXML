@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import lab.first.dao.RouteDAOImpl;
 import lab.first.model.Route;
 import lab.first.view.controllers.MainControl;
 
@@ -45,7 +46,7 @@ public class AddRouteController extends MainControl implements Initializable {
             a.showAndWait();
             return;
         }
-        RouteListController.dao.add(new Route(fromTextField.getText(), toTextField.getText()));
+        RouteDAOImpl.getInstance().add(new Route(fromTextField.getText(), toTextField.getText()));
         toScene("route/list_routes.fxml", "List Routes", event);
     }
 

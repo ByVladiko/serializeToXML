@@ -25,8 +25,6 @@ public class TicketListController extends MainControl implements Initializable {
 
     public static Client client;
 
-    static TicketDAOImpl dao = new TicketDAOImpl();
-
     @FXML
     private Button mainRoutesButton;
 
@@ -83,13 +81,17 @@ public class TicketListController extends MainControl implements Initializable {
         if (tableViewTickets.getSelectionModel().getSelectedItem() == null) {
             return;
         }
-        dao.remove(tableViewTickets.getSelectionModel().getSelectedItem());
+        TicketDAOImpl.getInstance().remove(tableViewTickets.getSelectionModel().getSelectedItem());
         refreshTable();
     }
 
     @FXML
-    void editTicketButtonAction(ActionEvent event) {
-
+    void editTicketButtonAction(ActionEvent event) throws Exception {
+        if (tableViewTickets.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+        EditTicketController.editTicket = tableViewTickets.getSelectionModel().getSelectedItem();
+        toScene("ticket/edit_ticket.fxml", "Edit ticket", event);
     }
 
     @FXML
@@ -99,10 +101,10 @@ public class TicketListController extends MainControl implements Initializable {
 
     private void refreshTable() {
         if (client == null) {
-            tableTickets.setAll(dao.getList());
+            tableTickets.setAll(TicketDAOImpl.getInstance().getList());
             tableViewTickets.setItems(tableTickets);
         } else {
-            tableTickets.setAll(dao.getListByClient(client));
+            tableTickets.setAll(TicketDAOImpl.getInstance().getListByClient(client));
             tableViewTickets.setItems(tableTickets);
         }
     }

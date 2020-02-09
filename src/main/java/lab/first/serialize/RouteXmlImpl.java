@@ -108,7 +108,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
     @Override
     boolean checkAndUpdate(Document doc, Route route) {
         Boolean flag = false;
-        NodeList routesList = doc.getElementsByTagName("route");
+        NodeList routesList = ((Element) doc.getElementsByTagName("routes").item(0)).getElementsByTagName("route");
         Element element = null;
         for (int i = 0; i < routesList.getLength(); i++) {
             element = (Element) routesList.item(i);

@@ -176,7 +176,6 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
                 flag = true;
                 element.getParentNode().removeChild(element);
                 addNewNode(doc, client);
-                writeDocument(doc, file);
                 break;
             }
         }

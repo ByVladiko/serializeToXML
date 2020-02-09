@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import lab.first.dao.ClientDAOImpl;
 import lab.first.model.Client;
 import lab.first.view.controllers.MainControl;
 
@@ -49,7 +50,7 @@ public class EditClientController extends MainControl {
         editClient.setFirstName(firstNameTextField.getText());
         editClient.setMiddleName(middleNameField.getText());
         editClient.setLastName(lastNameTextField.getText());
-        ClientListController.dao.add(editClient);
+        ClientDAOImpl.getInstance().add(editClient);
         toScene("client/list_clients.fxml", "List Clients", event);
     }
 

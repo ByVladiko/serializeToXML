@@ -182,17 +182,13 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
                 writeDocument(document, file);
             }
             document = documentBuilder.parse(file);
-            if (checkAndUpdate(document, ticket)) {
-                writeDocument(document, file);
-                return;
-            }
-            writeDocument(addNewNode(document, ticket), file);
+            checkAndUpdate(document, ticket);
+            writeDocument(document, file);
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -226,15 +222,21 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
     @Override
     boolean checkAndUpdate(Document doc, Ticket ticket) {
         Boolean flag = false;
-        NodeList ticketsList = doc.getElementsByTagName("ticket");
-        Element element;
-        for (int i = 0; i < ticketsList.getLength(); i++) {
-            element = (Element) ticketsList.item(i);
-            if (element.getAttribute("id").equals(ticket.getId().toString())) {
-                flag = true;
-                element.getParentNode().removeChild(element);
-                addNewNode(doc, ticket);
-                writeDocument(doc, file);
+        NodeList clientsList = ((Element) doc.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
+
+        for (int i = 0; i < clientsList.getLength(); i++) {
+
+            Element element = (Element) clientsList.item(i);
+
+            NodeList ticketsList = ((Element) element.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
+
+            for (int j = 0; j < ticketsList.getLength(); j++) {
+                if (ticket.getId().toString().equals(((Element) ticketsList.item(j)).getAttribute("id"))) {
+                    flag = true;
+                    ((Element) ((Element) ticketsList.item(j)).getElementsByTagName("airship").item(0)).setAttribute("id", ticket.getAirship().getId().toString());
+                    ((Element) ((Element) ticketsList.item(j)).getElementsByTagName("route").item(0)).setAttribute("id", ticket.getRoute().getId().toString());
+                    return flag;
+                }
             }
         }
         return flag;
@@ -244,10 +246,6 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
     Document addNewNode(Document document, Ticket ticket) {
         // Получаем корневой элемент
         Node root = document.getElementsByTagName("tickets").item(0);
-        if (root == null) {
-            Element ticketElement = document.createElement("tickets");
-            root = document.getElementsByTagName("repository").item(0).appendChild(ticketElement);
-        }
 
         // создание элемента ticket и присваивание ему id в виде атрибута
         Element ticketElement = document.createElement("ticket");

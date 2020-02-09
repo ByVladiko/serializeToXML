@@ -15,15 +15,15 @@
   </airships>
 <routes>
     <route id="91428adf-0211-4e68-90d0-9e65ae1e5087">
-      <startPoint>Самара</startPoint>
+      <startPoint>Геленджик</startPoint>
       <endPoint>Тула</endPoint>
+    </route>
+  <route id="986ade83-8d3e-4ee5-ad47-cab4425f7ba6">
+      <startPoint>Махачкала</startPoint>
+      <endPoint>Сочи</endPoint>
     </route>
   </routes>
 <clients>
-    
-  
-  
-  
   
   <client id="8de03ce0-88f5-44fb-a539-b4b0bbae6fab">
       <firstName>Бычков</firstName>
@@ -31,12 +31,10 @@
       <lastName>Николаевич</lastName>
       <tickets>
         
-        <ticket id="bfeb08cb-385f-49ab-8133-48d8dcf727a3">
-          <airship id="40a81aa3-d160-4d6a-8f28-ecdd2b601630"/>
-          <route id="91428adf-0211-4e68-90d0-9e65ae1e5087"/>
-        </ticket>
       </tickets>
     </client>
+  
+  
   
   
   <client id="ddbb6b33-7f1a-44de-a2a1-5fb105c089d9">
@@ -45,12 +43,12 @@
       <lastName>Семенович</lastName>
       <tickets>
         <ticket id="9c1562ca-bf05-4248-b4f9-6c99ce0d3f7a">
-          <airship id="75bf5072-ce2d-4662-bbe8-257c3035e43d"/>
+          <airship id="40a81aa3-d160-4d6a-8f28-ecdd2b601630"/>
           <route id="91428adf-0211-4e68-90d0-9e65ae1e5087"/>
         </ticket>
-        <ticket id="a771cf93-604b-4696-a068-b472d7fb0a95">
-          <airship id="88be61ce-086c-43bc-9eb8-b96df5894ae9"/>
-          <route id="91428adf-0211-4e68-90d0-9e65ae1e5087"/>
+        <ticket id="5026d27e-208e-436f-a503-af6d40a2bcbf">
+          <airship id="75bf5072-ce2d-4662-bbe8-257c3035e43d"/>
+          <route id="986ade83-8d3e-4ee5-ad47-cab4425f7ba6"/>
         </ticket>
       </tickets>
     </client>

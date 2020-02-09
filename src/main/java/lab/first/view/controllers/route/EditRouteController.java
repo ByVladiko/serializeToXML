@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import lab.first.dao.RouteDAOImpl;
 import lab.first.model.Route;
 import lab.first.view.controllers.MainControl;
 
@@ -49,7 +50,7 @@ public class EditRouteController extends MainControl implements Initializable {
         }
         editRoute.setStartPoint(fromTextField.getText());
         editRoute.setEndPoint(toTextField.getText());
-        RouteListController.dao.add(editRoute);
+        RouteDAOImpl.getInstance().add(editRoute);
         toScene("route/list_routes.fxml", "List Routes", event);
     }
 

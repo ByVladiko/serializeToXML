@@ -22,8 +22,6 @@ public class RouteListController extends MainControl implements Initializable {
 
     private ObservableList<Route> tableRoutes  = FXCollections.observableArrayList();
 
-    static RouteDAOImpl dao = new RouteDAOImpl();
-
     @FXML
     private TextField fromTextField;
 
@@ -73,7 +71,7 @@ public class RouteListController extends MainControl implements Initializable {
         if (tableViewRoutes.getSelectionModel().getSelectedItem() == null) {
             return;
         }
-            dao.remove(tableViewRoutes.getSelectionModel().getSelectedItem());
+            RouteDAOImpl.getInstance().remove(tableViewRoutes.getSelectionModel().getSelectedItem());
             refreshTable();
     }
 
@@ -92,7 +90,7 @@ public class RouteListController extends MainControl implements Initializable {
     }
 
     private void refreshTable() {
-        tableRoutes.setAll(dao.getList());
+        tableRoutes.setAll(RouteDAOImpl.getInstance().getList());
         tableViewRoutes.setItems(tableRoutes);
     }
 

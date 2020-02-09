@@ -8,10 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
@@ -23,8 +20,6 @@ import lab.first.view.controllers.ticket.TicketListController;
 public class ClientListController extends MainControl implements Initializable {
 
     private ObservableList<Client> tableClients  = FXCollections.observableArrayList();
-
-    static ClientDAOImpl dao = new ClientDAOImpl();
 
     @FXML
     private Button mainRoutesButton;
@@ -60,6 +55,9 @@ public class ClientListController extends MainControl implements Initializable {
     private TableView<Client> tableViewClients;
 
     @FXML
+    private TableRow<Client> tableRowClient;
+
+    @FXML
     private TableColumn<Client, String> tableClientColumnId;
 
     @FXML
@@ -81,7 +79,7 @@ public class ClientListController extends MainControl implements Initializable {
         if (tableViewClients.getSelectionModel().getSelectedItem() == null) {
             return;
         }
-        dao.remove(tableViewClients.getSelectionModel().getSelectedItem());
+        ClientDAOImpl.getInstance().remove(tableViewClients.getSelectionModel().getSelectedItem());
         refreshTable();
     }
 
@@ -106,7 +104,7 @@ public class ClientListController extends MainControl implements Initializable {
     }
 
     private void refreshTable() {
-        tableClients.setAll(dao.getList());
+        tableClients.setAll(ClientDAOImpl.getInstance().getList());
         tableViewClients.setItems(tableClients);
     }
 
@@ -115,8 +113,8 @@ public class ClientListController extends MainControl implements Initializable {
         if (tableViewClients.getSelectionModel().getSelectedItem() == null) {
             return;
         }
-        TicketListController.client = tableViewClients.getSelectionModel().getSelectedItem();
-        toScene("ticket/list_tickets.fxml", "List tickets of " + tableViewClients.getSelectionModel().getSelectedItem().toString(), event);
+            TicketListController.client = tableViewClients.getSelectionModel().getSelectedItem();
+            toScene("ticket/list_tickets.fxml", "List tickets of " + tableViewClients.getSelectionModel().getSelectedItem().getId().toString(), event);
     }
 
     @Override

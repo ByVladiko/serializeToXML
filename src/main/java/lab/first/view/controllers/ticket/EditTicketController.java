@@ -1,6 +1,7 @@
 package lab.first.view.controllers.ticket;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -11,7 +12,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import lab.first.dao.AirshipDAOImpl;
+import lab.first.dao.ClientDAOImpl;
 import lab.first.dao.RouteDAOImpl;
+import lab.first.dao.TicketDAOImpl;
 import lab.first.model.Airship;
 import lab.first.model.Route;
 import lab.first.model.Ticket;
@@ -19,11 +22,7 @@ import lab.first.view.controllers.MainControl;
 
 public class EditTicketController extends MainControl implements Initializable {
 
-    Ticket editTicket;
-
-    public void setEditTicket(Ticket editTicket) {
-        this.editTicket = editTicket;
-    }
+    static Ticket editTicket;
 
     @FXML
     private Button mainRoutesButton;
@@ -55,10 +54,15 @@ public class EditTicketController extends MainControl implements Initializable {
             a.showAndWait();
             return;
         }
-        editTicket.setRoute(editTicket.getRoute());
-        editTicket.setAirship(editTicket.getAirship());
-        TicketListController.dao.add(editTicket);
-        toScene("route/list_tickets.fxml", "List Tickets", event);
+        editTicket.setRoute(routeChoiceBox.getValue());
+        editTicket.setAirship(airshipChoiceBox.getValue());
+        if(TicketListController.client != null) {
+            TicketDAOImpl.getInstance().add(editTicket);
+            toScene("ticket/list_tickets.fxml", "List Tickets of " + TicketListController.client.getId().toString(), event);
+        } else {
+            TicketDAOImpl.getInstance().add(editTicket);
+            toScene("ticket/list_tickets.fxml", "List Tickets", event);
+        }
     }
 
     @FXML
