@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
+public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route>, Serializable {
 
     private File file;
     private DocumentBuilder documentBuilder;
@@ -34,9 +34,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
         }
         try {
             document = documentBuilder.parse(file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
@@ -77,9 +75,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
                 return;
             }
             writeDocument(addNewNode(document, route), file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -89,9 +85,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
         Document document = null;
         try {
             document = documentBuilder.parse("Serialize.xml");
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
         Element element = (Element) document.getElementsByTagName("routes").item(0);
@@ -107,7 +101,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
 
     @Override
     boolean checkAndUpdate(Document doc, Route route) {
-        Boolean flag = false;
+        boolean flag = false;
         NodeList routesList = ((Element) doc.getElementsByTagName("routes").item(0)).getElementsByTagName("route");
         Element element = null;
         for (int i = 0; i < routesList.getLength(); i++) {

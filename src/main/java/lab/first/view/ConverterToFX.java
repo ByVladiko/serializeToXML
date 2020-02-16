@@ -1,6 +1,5 @@
 package lab.first.view;
 
-import lab.first.view.controllers.Util;
 import lab.first.view.model.AirshipFX;
 import lab.first.view.model.ClientFX;
 import lab.first.view.model.RouteFX;
@@ -10,7 +9,9 @@ import lab.first.model.Client;
 import lab.first.model.Route;
 import lab.first.model.Ticket;
 
-public class ConverterToFX {
+import java.io.Serializable;
+
+public class ConverterToFX implements Serializable {
 
     public RouteFX convertToFx(Route route) {
 

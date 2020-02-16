@@ -3,9 +3,10 @@ package lab.first.dao;
 import lab.first.model.Airship;
 import lab.first.serialize.AirshipXmlImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AirshipDAOImpl implements DAO<Airship> {
+public class AirshipDAOImpl implements DAO<Airship>, Serializable {
 
     private AirshipXmlImpl xml = new AirshipXmlImpl();
 

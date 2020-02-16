@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
+public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client>, Serializable {
 
     private File file;
     private DocumentBuilder documentBuilder;
@@ -41,9 +41,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
         }
         try {
             document = documentBuilder.parse(file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
@@ -137,9 +135,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
                 return;
             }
             writeDocument(addNewNode(document, client), file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
@@ -150,9 +146,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
         Document document = null;
         try {
             document = documentBuilder.parse(file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
         Element element = (Element) document.getElementsByTagName("clients").item(0);
@@ -167,7 +161,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
 
     @Override
     boolean checkAndUpdate(Document doc, Client client) {
-        Boolean flag = false;
+        boolean flag = false;
         NodeList clientsList = doc.getElementsByTagName("client");
         Element element;
         for (int i = 0; i < clientsList.getLength(); i++) {

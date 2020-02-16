@@ -1,6 +1,8 @@
 package lab.first.view.controllers.route;
 
+import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -90,7 +92,11 @@ public class RouteListController extends MainControl implements Initializable {
     }
 
     private void refreshTable() {
-        tableRoutes.setAll(RouteDAOImpl.getInstance().getList());
+        try {
+            tableRoutes.setAll(netClient.getFactoryDAO().getRouteDAO().getList());
+        } catch (IOException | NotBoundException e) {
+            e.printStackTrace();
+        }
         tableViewRoutes.setItems(tableRoutes);
     }
 

@@ -3,12 +3,12 @@ package lab.first.dao;
 import lab.first.model.Route;
 import lab.first.serialize.RouteXmlImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RouteDAOImpl implements DAO<Route> {
+public class RouteDAOImpl implements DAO<Route>, Serializable {
 
-    private RouteXmlImpl xml = new RouteXmlImpl();
-
+    private RouteXmlImpl xml;
     private static RouteDAOImpl routeDAO;
 
     public static RouteDAOImpl getInstance() {
@@ -17,6 +17,10 @@ public class RouteDAOImpl implements DAO<Route> {
             return routeDAO;
         }
         return routeDAO;
+    }
+
+    private RouteDAOImpl() {
+        xml = new RouteXmlImpl();
     }
 
     @Override

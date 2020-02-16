@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
+public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket>, Serializable {
 
     private File file;
     private DocumentBuilder documentBuilder;
@@ -101,9 +101,7 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
         }
         try {
             document = documentBuilder.parse(file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
@@ -184,9 +182,7 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
             document = documentBuilder.parse(file);
             checkAndUpdate(document, ticket);
             writeDocument(document, file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -196,9 +192,7 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
         Document document = null;
         try {
             document = documentBuilder.parse("Serialize.xml");
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
         NodeList clientsList = ((Element) document.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
@@ -221,7 +215,7 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
 
     @Override
     boolean checkAndUpdate(Document doc, Ticket ticket) {
-        Boolean flag = false;
+        boolean flag = false;
         NodeList clientsList = ((Element) doc.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
 
         for (int i = 0; i < clientsList.getLength(); i++) {

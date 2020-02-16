@@ -4,9 +4,10 @@ import lab.first.model.Client;
 import lab.first.model.Ticket;
 import lab.first.serialize.TicketXmlImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TicketDAOImpl implements DAO<Ticket> {
+public class TicketDAOImpl implements DAO<Ticket>, Serializable {
 
     private TicketXmlImpl xml = new TicketXmlImpl();;
 

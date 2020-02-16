@@ -1,7 +1,6 @@
 package lab.first.view.controllers.ticket;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -12,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import lab.first.dao.AirshipDAOImpl;
-import lab.first.dao.ClientDAOImpl;
 import lab.first.dao.RouteDAOImpl;
 import lab.first.dao.TicketDAOImpl;
 import lab.first.model.Airship;
@@ -67,8 +65,8 @@ public class EditTicketController extends MainControl implements Initializable {
 
     @FXML
     public void initialize (URL url, ResourceBundle resourceBundle) {
-        RouteDAOImpl routeDAO = new RouteDAOImpl();
-        AirshipDAOImpl airshipDAO = new AirshipDAOImpl();
+        RouteDAOImpl routeDAO = RouteDAOImpl.getInstance();
+        AirshipDAOImpl airshipDAO = AirshipDAOImpl.getInstance();
         routeChoiceBox.setItems(FXCollections.observableArrayList(routeDAO.getList()));
         airshipChoiceBox.setItems(FXCollections.observableArrayList(airshipDAO.getList()));
         routeChoiceBox.setValue(editTicket.getRoute());

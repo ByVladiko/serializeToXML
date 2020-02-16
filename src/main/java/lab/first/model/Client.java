@@ -4,12 +4,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @XmlRootElement(name = "client")
-public class Client {
+public class Client implements Serializable {
     private UUID id;
     private String firstName;
     private String middleName;

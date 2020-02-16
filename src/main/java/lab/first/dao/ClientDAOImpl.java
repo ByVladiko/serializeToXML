@@ -3,9 +3,10 @@ package lab.first.dao;
 import lab.first.model.Client;
 import lab.first.serialize.ClientXmlImpl;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ClientDAOImpl implements DAO<Client> {
+public class ClientDAOImpl implements DAO<Client>, Serializable {
 
     private ClientXmlImpl xml = new ClientXmlImpl();
 

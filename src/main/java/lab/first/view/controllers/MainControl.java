@@ -8,14 +8,22 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lab.first.dao.FactoryDAO;
+import lab.first.net.NetClient;
 import lab.first.view.controllers.ticket.TicketListController;
+
+import java.rmi.RemoteException;
 
 public class MainControl {
 
     Stage mainStage;
-
-    public FactoryDAO factoryDAO = FactoryDAO.getInstance();
+    protected NetClient netClient;
+    {
+        try {
+            netClient = NetClient.getInstance();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void mainRoutesButtonAction(ActionEvent event) throws Exception {
@@ -42,5 +50,4 @@ public class MainControl {
         mainStage.setScene(scene);
         mainStage.show();
     }
-
 }

@@ -64,8 +64,8 @@ public class AddTicketController extends MainControl implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        RouteDAOImpl routeDAO = new RouteDAOImpl();
-        AirshipDAOImpl airshipDAO = new AirshipDAOImpl();
+        RouteDAOImpl routeDAO = RouteDAOImpl.getInstance();
+        AirshipDAOImpl airshipDAO = AirshipDAOImpl.getInstance();
         routeChoiceBox.setItems(FXCollections.observableArrayList(routeDAO.getList()));
         airshipChoiceBox.setItems(FXCollections.observableArrayList(airshipDAO.getList()));
     }

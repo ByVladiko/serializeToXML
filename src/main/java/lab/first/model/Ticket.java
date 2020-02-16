@@ -1,11 +1,12 @@
 package lab.first.model;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @XmlRootElement(name = "ticket")
-public class Ticket {
+public class Ticket implements Serializable {
 
     private UUID id;
     private Airship airship;

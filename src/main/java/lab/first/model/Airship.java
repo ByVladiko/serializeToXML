@@ -3,11 +3,12 @@ package lab.first.model;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @XmlRootElement(name = "airship")
-public class Airship {
+public class Airship implements Serializable {
     private UUID id;
     private String model;
     private long numberOfSeat;

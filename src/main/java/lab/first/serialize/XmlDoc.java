@@ -8,8 +8,9 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
-public abstract class XmlDoc<T> {
+public abstract class XmlDoc<T> implements Serializable {
 
     // Функция для сохранения DOM в файл
     protected void writeDocument(Document document, File file) throws TransformerFactoryConfigurationError {

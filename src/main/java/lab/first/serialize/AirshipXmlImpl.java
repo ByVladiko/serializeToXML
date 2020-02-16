@@ -12,11 +12,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
+public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>, Serializable {
 
     private File file;
     private DocumentBuilder documentBuilder;
@@ -39,9 +40,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
         }
         try {
             document = documentBuilder.parse("Serialize.xml");
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
@@ -79,9 +78,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
                 return;
             }
             writeDocument(addNewNode(document, airship), file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
@@ -93,9 +90,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
         Document document = null;
         try {
             document = documentBuilder.parse("Serialize.xml");
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
         Element element = (Element) document.getElementsByTagName("airships").item(0);
@@ -147,7 +142,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
 
     @Override
     boolean checkAndUpdate(Document doc, Airship airship) {
-        Boolean flag = false;
+        boolean flag = false;
         NodeList airshipsList = doc.getElementsByTagName("airship");
         Element element = null;
         for (int i = 0; i < airshipsList.getLength(); i++) {

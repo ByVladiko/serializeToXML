@@ -1,11 +1,12 @@
 package lab.first.model;
 
 import javax.xml.bind.annotation.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @XmlRootElement(name = "route")
-public class Route {
+public class Route implements Serializable {
     private UUID id;
     private String startPoint;
     private String endPoint;
