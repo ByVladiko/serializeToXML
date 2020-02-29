@@ -12,20 +12,17 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
 
     private File file;
     private DocumentBuilder documentBuilder;
 
     public AirshipXmlImpl() {
-        this.file = new File("Serialize.xml");
+        this.file = new File("Repository.xml");
         try {
             this.documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         } catch (ParserConfigurationException e) {
@@ -41,7 +38,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>, Ser
             return list;
         }
         try {
-            document = documentBuilder.parse("Serialize.xml");
+            document = documentBuilder.parse("Repository.xml");
         } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
@@ -91,7 +88,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship>, Ser
 
         Document document = null;
         try {
-            document = documentBuilder.parse("Serialize.xml");
+            document = documentBuilder.parse("Repository.xml");
         } catch (SAXException | IOException e) {
             e.printStackTrace();
         }

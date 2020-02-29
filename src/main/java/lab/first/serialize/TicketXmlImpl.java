@@ -1,31 +1,31 @@
 package lab.first.serialize;
 
-import airship.model.Ticket;
 import airship.model.Airship;
 import airship.model.Client;
 import airship.model.Route;
+import airship.model.Ticket;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket>, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
 
     private File file;
     private DocumentBuilder documentBuilder;
 
     public TicketXmlImpl() {
-        this.file = new File("Serialize.xml");
+        this.file = new File("Repository.xml");
         try {
             this.documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         } catch (ParserConfigurationException e) {
@@ -193,7 +193,7 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket>, Serial
     public void delete(Ticket ticket) {
         Document document = null;
         try {
-            document = documentBuilder.parse("Serialize.xml");
+            document = documentBuilder.parse("Repository.xml");
         } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
