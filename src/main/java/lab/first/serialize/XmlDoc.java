@@ -8,14 +8,11 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
 
-public abstract class XmlDoc<T> implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+abstract class XmlDoc<T> {
 
     // Функция для сохранения DOM в файл
-    protected void writeDocument(Document document, File file) throws TransformerFactoryConfigurationError {
+    void writeDocument(Document document, File file) throws TransformerFactoryConfigurationError {
         try {
             Transformer tr = TransformerFactory.newInstance().newTransformer();
             tr.setOutputProperty(OutputKeys.INDENT, "yes");
