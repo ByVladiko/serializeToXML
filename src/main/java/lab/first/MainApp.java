@@ -1,7 +1,7 @@
 package lab.first;
 
-import airship.model.Airship;
 import airship.dao.FactoryDAO;
+import airship.model.Airship;
 import lab.first.dao.factory.FactoryDAOImpl;
 import lab.first.serialize.AirshipXmlImpl;
 
@@ -38,10 +38,7 @@ public class MainApp {
             registry.bind(REMOTE_SERVICE_NAME, factoryDAO);
             System.out.println("Done");
             System.out.println("Server is waiting for requests...");
-            while (true) {
-                Thread.sleep(Integer.MAX_VALUE);
-            }
-        } catch (AlreadyBoundException | RemoteException | InterruptedException e) {
+        } catch (AlreadyBoundException | RemoteException e) {
             e.printStackTrace();
         }
     }
