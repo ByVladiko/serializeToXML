@@ -1,25 +1,30 @@
 package lab.first.dao.DAOImpl;
 
-import airship.model.Airship;
 import airship.dao.DAO;
+import airship.model.Airship;
 import lab.first.serialize.AirshipXmlImpl;
 import lab.first.serialize.Xml;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class AirshipDAOImpl implements DAO<Airship>, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class AirshipDAOImpl extends UnicastRemoteObject implements DAO<Airship> {
 
     private Xml xml = new AirshipXmlImpl();
 
-    private static DAO airshipDAO;
+    private static DAO<Airship> airshipDAO;
 
-    public static DAO getInstance() {
+    private AirshipDAOImpl() throws RemoteException {
+    }
+
+    public static DAO<Airship> getInstance() {
         if (airshipDAO == null) {
-            airshipDAO = new AirshipDAOImpl();
+            try {
+                airshipDAO = new AirshipDAOImpl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             return airshipDAO;
         }
         return airshipDAO;

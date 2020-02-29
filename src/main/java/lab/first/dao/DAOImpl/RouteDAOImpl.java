@@ -1,25 +1,30 @@
 package lab.first.dao.DAOImpl;
 
+import airship.dao.DAO;
 import airship.model.Route;
-import lab.first.dao.DAO;
 import lab.first.serialize.RouteXmlImpl;
 import lab.first.serialize.Xml;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class RouteDAOImpl implements DAO<Route>, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class RouteDAOImpl extends UnicastRemoteObject implements DAO<Route> {
 
     private Xml xml = new RouteXmlImpl();
 
-    private static DAO routeDAO;
+    private static DAO<Route> routeDAO;
 
-    public static DAO getInstance() {
+    private RouteDAOImpl() throws RemoteException {
+    }
+
+    public static DAO<Route> getInstance() {
         if (routeDAO == null) {
-            routeDAO = new RouteDAOImpl();
+            try {
+                routeDAO = new RouteDAOImpl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             return routeDAO;
         }
         return routeDAO;

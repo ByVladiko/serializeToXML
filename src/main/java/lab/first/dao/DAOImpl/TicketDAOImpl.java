@@ -1,25 +1,30 @@
 package lab.first.dao.DAOImpl;
 
+import airship.dao.DAO;
 import airship.model.Ticket;
-import lab.first.dao.DAO;
 import lab.first.serialize.TicketXmlImpl;
 import lab.first.serialize.Xml;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class TicketDAOImpl implements DAO<Ticket>, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class TicketDAOImpl extends UnicastRemoteObject implements DAO<Ticket> {
 
     private Xml xml = new TicketXmlImpl();;
 
-    private static DAO ticketDAO;
+    private static DAO<Ticket> ticketDAO;
 
-    public static DAO getInstance() {
+    private TicketDAOImpl() throws RemoteException {
+    }
+
+    public static DAO<Ticket> getInstance() {
         if (ticketDAO == null) {
-            ticketDAO = new TicketDAOImpl();
+            try {
+                ticketDAO = new TicketDAOImpl();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             return ticketDAO;
         }
         return ticketDAO;
@@ -39,8 +44,4 @@ public class TicketDAOImpl implements DAO<Ticket>, Serializable {
     public List<Ticket> getList() throws RemoteException  {
         return xml.read();
     }
-
-//    public List<Ticket> getListByClient(Client client) {
-//        return xml.getTicketsByClient(client);
-//    }
 }
