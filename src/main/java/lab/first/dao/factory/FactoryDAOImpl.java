@@ -2,22 +2,23 @@ package lab.first.dao.factory;
 
 import airship.dao.DAO;
 import airship.dao.FactoryDAO;
+import airship.model.Airship;
+import airship.model.Client;
+import airship.model.Route;
+import airship.model.Ticket;
 import lab.first.dao.DAOImpl.AirshipDAOImpl;
 import lab.first.dao.DAOImpl.ClientDAOImpl;
 import lab.first.dao.DAOImpl.RouteDAOImpl;
 import lab.first.dao.DAOImpl.TicketDAOImpl;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class FactoryDAOImpl extends UnicastRemoteObject implements FactoryDAO, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class FactoryDAOImpl extends UnicastRemoteObject implements FactoryDAO {
 
     private static FactoryDAO factoryDAO;
 
-    public FactoryDAOImpl() throws RemoteException {
+    private FactoryDAOImpl() throws RemoteException {
         super();
     }
 
@@ -34,22 +35,22 @@ public class FactoryDAOImpl extends UnicastRemoteObject implements FactoryDAO, S
     }
 
     @Override
-    public DAO getAirshipDAO() throws RemoteException {
-        return (DAO) AirshipDAOImpl.getInstance();
+    public DAO<Airship> getAirshipDAO() throws RemoteException {
+        return (DAO<Airship>) AirshipDAOImpl.getInstance();
     }
 
     @Override
-    public DAO getClientDAO() throws RemoteException {
-        return (DAO) ClientDAOImpl.getInstance();
+    public DAO<Client> getClientDAO() throws RemoteException {
+        return (DAO<Client>) ClientDAOImpl.getInstance();
     }
 
     @Override
-    public DAO getRouteDAO() throws RemoteException {
-        return (DAO) RouteDAOImpl.getInstance();
+    public DAO<Route> getRouteDAO() throws RemoteException {
+        return (DAO<Route>) RouteDAOImpl.getInstance();
     }
 
     @Override
-    public DAO getTicketDAO() throws RemoteException {
-        return (DAO) TicketDAOImpl.getInstance();
+    public DAO<Ticket> getTicketDAO() throws RemoteException {
+        return (DAO<Ticket>) TicketDAOImpl.getInstance();
     }
 }
