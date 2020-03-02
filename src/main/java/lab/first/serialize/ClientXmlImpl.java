@@ -82,13 +82,12 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
                     String ticketId = ((Element) ticketsList.item(j)).getAttribute("id");
 
                     Airship airship = new Airship();
-
                     String idAirship = ((Element) ((Element) ticketsList.item(j)).getElementsByTagName("airship").item(0)).getAttribute("id");
                     Element airshipOfTicket = findElement(document, "airship", idAirship);
 
                     airship.setId(UUID.fromString(airshipOfTicket.getAttribute("id")));
                     airship.setModel(airshipOfTicket.getElementsByTagName("model").item(0).getFirstChild().getNodeValue());
-                    airship.setNumberOfSeat(Long.valueOf(airshipOfTicket.getElementsByTagName("numberOfSeat").item(0).getFirstChild().getNodeValue()));
+                    airship.setNumberOfSeat(Long.parseLong(airshipOfTicket.getElementsByTagName("numberOfSeat").item(0).getFirstChild().getNodeValue()));
 
                     Route route = new Route();
                     String idRoute = ((Element) ((Element) ticketsList.item(j)).getElementsByTagName("route").item(0)).getAttribute("id");

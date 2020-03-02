@@ -1,7 +1,6 @@
 package lab.first.serialize;
 
 import airship.model.Airship;
-import airship.model.Client;
 import airship.model.Route;
 import airship.model.Ticket;
 import org.w3c.dom.Document;
@@ -42,9 +41,7 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
         }
         try {
             document = documentBuilder.parse(file);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
 
@@ -91,71 +88,6 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
 
                 list.add(ticket);
             }
-        }
-        return list;
-    }
-
-    public List<Ticket> getTicketsByClient(Client client) {
-        List<Ticket> list = new ArrayList<>();
-        Document document = null;
-        if (!file.exists()) {
-            return list;
-        }
-        try {
-            document = documentBuilder.parse(file);
-        } catch (SAXException | IOException e) {
-            e.printStackTrace();
-        }
-
-        NodeList clientsList;
-        try {
-            clientsList = ((Element) document.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
-        } catch (NullPointerException e) {
-            return list;
-        }
-
-        for (int i = 0; i < clientsList.getLength(); i++) {
-
-            Element element = (Element) clientsList.item(i);
-
-            if (!client.getId().toString().equals(element.getAttribute("id"))) {
-                continue;
-            }
-
-            NodeList ticketsList;
-            try {
-                ticketsList = ((Element) element.getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
-            } catch (NullPointerException e) {
-                return list;
-            }
-
-            for (int j = 0; j < ticketsList.getLength(); j++) {
-
-                Ticket ticket = new Ticket();
-
-                ticket.setId(UUID.fromString(((Element)ticketsList.item(j)).getAttribute("id")));
-
-                String idAirship = ((Element)((Element) ticketsList.item(j)).getElementsByTagName("airship").item(0)).getAttribute("id");
-                Element airshipOfTicket = findElement(document, "airship", idAirship);
-
-                Airship airship = new Airship();
-                airship.setId(UUID.fromString(airshipOfTicket.getAttribute("id")));
-                airship.setModel(airshipOfTicket.getElementsByTagName("model").item(0).getFirstChild().getNodeValue());
-                airship.setNumberOfSeat(Long.parseLong(airshipOfTicket.getElementsByTagName("numberOfSeat").item(0).getFirstChild().getNodeValue()));
-
-                String idRoute = ((Element)((Element) ticketsList.item(j)).getElementsByTagName("route").item(0)).getAttribute("id");
-                Element routeOfTicket = findElement(document, "route", idRoute);
-
-                Route route = new Route();
-                route.setId(UUID.fromString(routeOfTicket.getAttribute("id")));
-                route.setStartPoint(routeOfTicket.getElementsByTagName("startPoint").item(0).getFirstChild().getNodeValue());
-                route.setEndPoint(routeOfTicket.getElementsByTagName("endPoint").item(0).getFirstChild().getNodeValue());
-
-                ticket.setAirship(airship);
-                ticket.setRoute(route);
-                list.add(ticket);
-            }
-            return list;
         }
         return list;
     }
