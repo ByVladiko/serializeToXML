@@ -4,40 +4,32 @@
       <model>Aerobus</model>
       <numberOfSeat>100</numberOfSeat>
     </airship>
-  <airship id="40a81aa3-d160-4d6a-8f28-ecdd2b601630">
+    <airship id="40a81aa3-d160-4d6a-8f28-ecdd2b601630">
       <model>Aeroflot</model>
       <numberOfSeat>150</numberOfSeat>
     </airship>
-  <airship id="75bf5072-ce2d-4662-bbe8-257c3035e43d">
+    <airship id="75bf5072-ce2d-4662-bbe8-257c3035e43d">
       <model>Tui</model>
       <numberOfSeat>250</numberOfSeat>
     </airship>
   </airships>
-<routes>
-    <route id="91428adf-0211-4e68-90d0-9e65ae1e5087">
-      <startPoint>Геленджик</startPoint>
-      <endPoint>Тула</endPoint>
-    </route>
-  <route id="986ade83-8d3e-4ee5-ad47-cab4425f7ba6">
+  <routes> 
+    <route id="986ade83-8d3e-4ee5-ad47-cab4425f7ba6">
       <startPoint>Махачкала</startPoint>
       <endPoint>Сочи</endPoint>
     </route>
+	<route id="91428adf-0211-4e68-90d0-9e65ae1e5087">
+	  <startPoint>Анапа</startPoint>
+      <endPoint>Геленджик</endPoint>
+    </route>
+  <route id="d29acea4-719f-4657-9a34-83adbc562202">
+      <startPoint>Самара</startPoint>
+      <endPoint>Санкт-Петербург</endPoint>
+    </route>
   </routes>
-<clients>
-  
-  <client id="8de03ce0-88f5-44fb-a539-b4b0bbae6fab">
-      <firstName>Бычков</firstName>
-      <middleName>Владислав</middleName>
-      <lastName>Николаевич</lastName>
-      <tickets>
-        
-      </tickets>
-    </client>
-  
-  
-  
-  
-  <client id="ddbb6b33-7f1a-44de-a2a1-5fb105c089d9">
+  <clients>
+    
+    <client id="ddbb6b33-7f1a-44de-a2a1-5fb105c089d9">
       <firstName>Михаил</firstName>
       <middleName>Степанович</middleName>
       <lastName>Семенович</lastName>
@@ -52,5 +44,17 @@
         </ticket>
       </tickets>
     </client>
+  <client id="8de03ce0-88f5-44fb-a539-b4b0bbae6fab">
+      <firstName>Бычков</firstName>
+      <middleName>Владислав</middleName>
+      <lastName>Николаевич</lastName>
+      <tickets>
+        <ticket id="9940f41a-3573-4192-83dd-9096f4a8df41">
+          <airship id="40a81aa3-d160-4d6a-8f28-ecdd2b601630"/>
+          <route id="d29acea4-719f-4657-9a34-83adbc562202"/>
+        </ticket>
+      </tickets>
+    </client>
+  
   </clients>
 </repository>
