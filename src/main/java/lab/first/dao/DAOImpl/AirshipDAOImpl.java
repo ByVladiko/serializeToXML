@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AirshipDAOImpl extends UnicastRemoteObject implements DAO<Airship> {
 
-    private Xml xml = new AirshipXmlImpl();
+    private Xml<Airship> xml = new AirshipXmlImpl();
 
     private static DAO<Airship> airshipDAO;
 
@@ -31,13 +31,13 @@ public class AirshipDAOImpl extends UnicastRemoteObject implements DAO<Airship> 
     }
 
     @Override
-    public void add(Airship airship) throws RemoteException {
-        xml.save(airship);
+    public boolean add(Airship airship) throws RemoteException {
+        return xml.save(airship);
     }
 
     @Override
-    public void remove(Airship airship) throws RemoteException {
-        xml.delete(airship);
+    public boolean remove(Airship airship) throws RemoteException {
+        return xml.delete(airship);
     }
 
     @Override

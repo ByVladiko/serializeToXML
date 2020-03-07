@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TicketDAOImpl extends UnicastRemoteObject implements DAO<Ticket> {
 
-    private Xml xml = new TicketXmlImpl();;
+    private Xml<Ticket> xml = new TicketXmlImpl();;
 
     private static DAO<Ticket> ticketDAO;
 
@@ -31,13 +31,13 @@ public class TicketDAOImpl extends UnicastRemoteObject implements DAO<Ticket> {
     }
 
     @Override
-    public void add(Ticket ticket) throws RemoteException {
-        xml.save(ticket);
+    public boolean add(Ticket ticket) throws RemoteException {
+        return xml.save(ticket);
     }
 
     @Override
-    public void remove(Ticket ticket) throws RemoteException  {
-        xml.delete(ticket);
+    public boolean remove(Ticket ticket) throws RemoteException  {
+        return xml.delete(ticket);
     }
 
     @Override

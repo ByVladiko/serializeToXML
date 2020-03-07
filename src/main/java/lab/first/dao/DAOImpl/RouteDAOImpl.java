@@ -1,6 +1,7 @@
 package lab.first.dao.DAOImpl;
 
 import airship.dao.DAO;
+import airship.model.Client;
 import airship.model.Route;
 import lab.first.serialize.RouteXmlImpl;
 import lab.first.serialize.Xml;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class RouteDAOImpl extends UnicastRemoteObject implements DAO<Route> {
 
-    private Xml xml = new RouteXmlImpl();
+    private Xml<Route> xml = new RouteXmlImpl();
 
     private static DAO<Route> routeDAO;
 
@@ -31,13 +32,13 @@ public class RouteDAOImpl extends UnicastRemoteObject implements DAO<Route> {
     }
 
     @Override
-    public void add(Route route) throws RemoteException {
-        xml.save(route);
+    public boolean add(Route route) throws RemoteException {
+        return xml.save(route);
     }
 
     @Override
-    public void remove(Route route) throws RemoteException  {
-        xml.delete(route);
+    public boolean remove(Route route) throws RemoteException  {
+        return xml.delete(route);
     }
 
     @Override

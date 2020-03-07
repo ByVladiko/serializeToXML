@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ClientDAOImpl extends UnicastRemoteObject implements DAO<Client> {
 
-    private Xml xml = new ClientXmlImpl();
+    private Xml<Client> xml = new ClientXmlImpl();
 
     private static DAO<Client> clientDAO;
 
@@ -31,13 +31,13 @@ public class ClientDAOImpl extends UnicastRemoteObject implements DAO<Client> {
     }
 
     @Override
-    public void add(Client client) throws RemoteException {
-        xml.save(client);
+    public boolean add(Client client) throws RemoteException {
+        return xml.save(client);
     }
 
     @Override
-    public void remove(Client client) throws RemoteException  {
-        xml.delete(client);
+    public boolean remove(Client client) throws RemoteException  {
+        return xml.delete(client);
     }
 
     @Override
