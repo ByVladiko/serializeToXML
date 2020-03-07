@@ -8,7 +8,7 @@ public interface Xml<T> extends Remote {
 
     List<T> read() throws RemoteException;
 
-    void save(T obj) throws RemoteException;
+    boolean save(T obj) throws RemoteException;
 
-    void delete(T obj) throws RemoteException;
+    boolean delete(T obj) throws RemoteException;
 }

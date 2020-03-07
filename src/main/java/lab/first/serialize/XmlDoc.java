@@ -12,7 +12,7 @@ import java.io.IOException;
 abstract class XmlDoc<T> {
 
     // Функция для сохранения DOM в файл
-    void writeDocument(Document document, File file) throws TransformerFactoryConfigurationError {
+    boolean writeDocument(Document document, File file) throws TransformerFactoryConfigurationError {
         try {
             Transformer tr = TransformerFactory.newInstance().newTransformer();
             tr.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -23,8 +23,10 @@ abstract class XmlDoc<T> {
             StreamResult result = new StreamResult(fos);
             tr.transform(source, result);
             fos.close();
+            return true;
         } catch (TransformerException | IOException e) {
             e.printStackTrace(System.out);
+            return false;
         }
     }
 
