@@ -35,7 +35,7 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
     @Override
     public List<Ticket> read() {
         List<Ticket> list = new ArrayList<>();
-        Document document = null;
+        Document document = documentBuilder.newDocument();
         if (!file.exists()) {
             return list;
         }
@@ -103,7 +103,7 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
     }
 
     @Override
-    public void save(Ticket ticket) {
+    public boolean save(Ticket ticket) {
 
         try {
             Document document;
@@ -112,22 +112,25 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
                 document = documentBuilder.newDocument();
                 document.appendChild(document.createElement("repository"));
                 writeDocument(document, file);
+                return true;
             }
             document = documentBuilder.parse(file);
             checkAndUpdate(document, ticket);
-            writeDocument(document, file);
+            return writeDocument(document, file);
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void delete(Ticket ticket) {
-        Document document = null;
+    public boolean delete(Ticket ticket) {
+        Document document = documentBuilder.newDocument();
         try {
             document = documentBuilder.parse("Repository.xml");
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+            return false;
         }
         NodeList clientsList = ((Element) document.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
 
@@ -143,13 +146,13 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
                     break;
                 }
             }
-            writeDocument(document, file);
+            return writeDocument(document, file);
         }
+        return false;
     }
 
     @Override
     boolean checkAndUpdate(Document doc, Ticket ticket) {
-        boolean flag = false;
         NodeList clientsList = ((Element) doc.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
 
         for (int i = 0; i < clientsList.getLength(); i++) {
@@ -160,14 +163,13 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
 
             for (int j = 0; j < ticketsList.getLength(); j++) {
                 if (ticket.getId().toString().equals(((Element) ticketsList.item(j)).getAttribute("id"))) {
-                    flag = true;
                     ((Element) ((Element) ticketsList.item(j)).getElementsByTagName("airship").item(0)).setAttribute("id", ticket.getAirship().getId().toString());
                     ((Element) ((Element) ticketsList.item(j)).getElementsByTagName("route").item(0)).setAttribute("id", ticket.getRoute().getId().toString());
-                    return flag;
+                    return true;
                 }
             }
         }
-        return flag;
+        return false;
     }
 
     @Override

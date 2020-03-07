@@ -119,7 +119,7 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
     }
 
     @Override
-    public void save(Client client) {
+    public boolean save(Client client) {
 
         try {
             Document document;
@@ -132,22 +132,25 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
             document = documentBuilder.parse(file);
             if (checkAndUpdate(document, client)) {
                 writeDocument(document, file);
-                return;
+                return true;
             }
             writeDocument(addNewNode(document, client), file);
+            return true;
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+            return false;
         }
 
     }
 
     @Override
-    public void delete(Client client) {
+    public boolean delete(Client client) {
         Document document = null;
         try {
             document = documentBuilder.parse(file);
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+            return false;
         }
         Element element = (Element) document.getElementsByTagName("clients").item(0);
         NodeList clients = element.getElementsByTagName("client");
@@ -157,23 +160,22 @@ public class ClientXmlImpl extends XmlDoc<Client> implements Xml<Client> {
             }
         }
         writeDocument(document, file);
+        return true;
     }
 
     @Override
     boolean checkAndUpdate(Document doc, Client client) {
-        boolean flag = false;
         NodeList clientsList = doc.getElementsByTagName("client");
         Element element;
         for (int i = 0; i < clientsList.getLength(); i++) {
             element = (Element) clientsList.item(i);
             if (element.getAttribute("id").equals(client.getId().toString())) {
-                flag = true;
                 element.getParentNode().removeChild(element);
                 addNewNode(doc, client);
-                break;
+                return true;
             }
         }
-        return flag;
+        return false;
     }
 
     @Override

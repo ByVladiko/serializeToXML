@@ -32,8 +32,9 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
 
     @Override
     public List<Airship> read() {
-        Document document = null;
+        Document document = documentBuilder.newDocument();
         List<Airship> list = new ArrayList<>();
+
         if (!file.exists()) {
             return list;
         }
@@ -61,7 +62,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
     }
 
     @Override
-    public void save(Airship airship) {
+    public boolean save(Airship airship) {
 
         try {
             Document document;
@@ -73,24 +74,24 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
             }
             document = documentBuilder.parse(file);
             if (checkAndUpdate(document, airship)) {
-                writeDocument(document, file);
-                return;
+                return writeDocument(document, file);
             }
-            writeDocument(addNewNode(document, airship), file);
+            return writeDocument(addNewNode(document, airship), file);
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+            return false;
         }
-
     }
 
     @Override
-    public void delete(Airship airship) {
+    public boolean delete(Airship airship) {
 
-        Document document = null;
+        Document document;
         try {
             document = documentBuilder.parse("Repository.xml");
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+            return false;
         }
         Element element = (Element) document.getElementsByTagName("airships").item(0);
         NodeList airships = element.getElementsByTagName("airship");
@@ -99,8 +100,7 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
                 airships.item(i).getParentNode().removeChild(airships.item(i));
             }
         }
-        writeDocument(document, file);
-
+        return writeDocument(document, file);
     }
 
     @Override
@@ -141,19 +141,16 @@ public class AirshipXmlImpl extends XmlDoc<Airship> implements Xml<Airship> {
 
     @Override
     boolean checkAndUpdate(Document doc, Airship airship) {
-        boolean flag = false;
         NodeList airshipsList = doc.getElementsByTagName("airship");
-        Element element = null;
         for (int i = 0; i < airshipsList.getLength(); i++) {
-            element = (Element) airshipsList.item(i);
+            Element element = (Element) airshipsList.item(i);
             if (element.getAttribute("id").equals(airship.getId().toString())) {
-                flag = true;
                 element.getElementsByTagName("model").item(0).getFirstChild().setNodeValue(airship.getModel());
                 element.getElementsByTagName("numberOfSeat").item(0).getFirstChild().setNodeValue(Long.toString(airship.getNumberOfSeat()));
-                break;
+                return true;
             }
         }
-        return flag;
+        return false;
     }
 
 }

@@ -1,6 +1,8 @@
 package lab.first.serialize;
 
+import airship.model.Airship;
 import airship.model.Route;
+import airship.model.Ticket;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -30,9 +32,9 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
 
     @Override
     public List<Route> read() {
-        Document document = null;
+        Document document = documentBuilder.newDocument();
         List<Route> list = new ArrayList<>();
-        if(!file.exists()) {
+        if (!file.exists()) {
             return list;
         }
         try {
@@ -62,7 +64,7 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
     }
 
     @Override
-    public void save(Route route) {
+    public boolean save(Route route) {
 
         try {
             Document document;
@@ -75,47 +77,77 @@ public class RouteXmlImpl extends XmlDoc<Route> implements Xml<Route> {
             document = documentBuilder.parse(file);
             if (checkAndUpdate(document, route)) {
                 writeDocument(document, file);
-                return;
+                return true;
             }
             writeDocument(addNewNode(document, route), file);
+            return true;
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     @Override
-    public void delete(Route route) {
-        Document document = null;
+    public boolean delete(Route route) {
+        Document document;
         try {
             document = documentBuilder.parse("Repository.xml");
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+            return false;
         }
+        if(checkLinkToElement(document, route)) return false;
         Element element = (Element) document.getElementsByTagName("routes").item(0);
         NodeList routes = element.getElementsByTagName("route");
         for (int i = 0; i < routes.getLength(); i++) {
-            if(routes.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(route.getId().toString())) {
+            if (routes.item(i).getAttributes().getNamedItem("id").getNodeValue().equals(route.getId().toString())) {
                 routes.item(i).getParentNode().removeChild(routes.item(i));
                 break;
             }
         }
         writeDocument(document, file);
+        return true;
     }
 
     @Override
     boolean checkAndUpdate(Document doc, Route route) {
-        boolean flag = false;
+        Element element;
         NodeList routesList = ((Element) doc.getElementsByTagName("routes").item(0)).getElementsByTagName("route");
-        Element element = null;
         for (int i = 0; i < routesList.getLength(); i++) {
             element = (Element) routesList.item(i);
             if (element.getAttribute("id").equals(route.getId().toString())) {
-                flag = true;
                 element.getElementsByTagName("startPoint").item(0).getFirstChild().setNodeValue(route.getStartPoint());
                 element.getElementsByTagName("endPoint").item(0).getFirstChild().setNodeValue(route.getEndPoint());
+                return true;
             }
         }
-        return flag;
+        return false;
+    }
+
+    private boolean checkLinkToElement(Document doc, Route route) {
+        NodeList clientList;
+        try {
+            clientList = ((Element) doc.getElementsByTagName("clients").item(0)).getElementsByTagName("client");
+        } catch (NullPointerException e) {
+            return false;
+        }
+
+        for (int i = 0; i < clientList.getLength(); i++) {
+
+            NodeList ticketsOfClient;
+            try {
+                ticketsOfClient = ((Element) ((Element) clientList.item(i)).getElementsByTagName("tickets").item(0)).getElementsByTagName("ticket");
+            } catch (NullPointerException e) {
+                return false;
+            }
+
+            for (int j = 0; j < ticketsOfClient.getLength(); j++) {
+                if (((Element) ((Element) ticketsOfClient.item(j)).getElementsByTagName("route").item(0)).getAttribute("id").equals(route.getId().toString())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
