@@ -143,10 +143,9 @@ public class TicketXmlImpl extends XmlDoc<Ticket> implements Xml<Ticket> {
             for (int j = 0; j < ticketsList.getLength(); j++) {
                 if (ticket.getId().toString().equals(((Element) ticketsList.item(j)).getAttribute("id"))) {
                     ticketsList.item(j).getParentNode().removeChild(ticketsList.item(j));
-                    break;
+                    return writeDocument(document, file);
                 }
             }
-            return writeDocument(document, file);
         }
         return false;
     }
